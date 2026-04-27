@@ -3,28 +3,29 @@
 <head>
     <title>Products</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
 <div class="navbar">
     <a href="Home.html">Home</a>
-    <a href="Products.html">Products</a>
+    <div class="dropdown">
+        <button onclick="toggleDropdown()" class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+        <div id="dropdown-content" class="dropdown-content">
+            <a href="#" onclick="filterProducts('all')">All Products</a>
+            <a href="#" onclick="filterProducts('face')">Face</a>
+            <a href="#" onclick="filterProducts('eyes')">Eyes</a>
+            <a href="#" onclick="filterProducts('lips')">Lips</a>
+            <a href="#" onclick="filterProducts('brush')">Brushes</a>
+        </div>
+    </div>
     <a href="Tips.html">Tips</a>
     <a href="Gallery.html">Gallery</a>
     <a href="Contact.html">Contact</a>
 </div>
 
-<h1>Our Products 💄</h1>
-
-<!-- FILTER BUTTONS -->
-<div class="filters">
-    <button onclick="filterProducts('all')">All</button>
-    <button onclick="filterProducts('face')">Face</button>
-    <button onclick="filterProducts('eyes')">Eyes</button>
-    <button onclick="filterProducts('lips')">Lips</button>
-    <button onclick="filterProducts('brush')">Brushes</button>
-</div>
+<h1>Our Products </h1>
 
 <!-- CART -->
 <div class="cart">
@@ -41,6 +42,15 @@
         <p>Foundation</p>
         <p>200 EGP</p>
         <button onclick="addToCart('Foundation', 200)">
+    Add to Cart
+</button>
+    </div>
+
+    <div class="card face">
+        <img src="loosepowder.jpg">
+        <p>Loose Powder</p>
+        <p>180 EGP</p>
+        <button onclick="addToCart('Loose Powder', 180)">
     Add to Cart
 </button>
     </div>
@@ -78,15 +88,48 @@
         <img src="lipstick.jpg">
         <p>Lipstick</p>
         <p>180 EGP</p>
-        <button onclick="addToCart()">Add to Cart</button>
+        <button onclick="addToCart('Lipstick', 180)">
+    Add to Cart
+</button>
     </div>
 
+    <div class="card lips">
+        <img src="lipgloss.jpg">
+        <p>Lipgloss</p>
+        <p>150 EGP</p>
+        <button onclick="addToCart('Lipgloss', 150)">
+    Add to Cart
+</button>
+ </div>
+      <div class="card lips">
+        <img src="lipliner.jpg">
+        <p>Lipliner</p>
+        <p>190 EGP</p>
+        <button onclick="addToCart('Lipliner', 190)">
+    Add to Cart
+</button>
+    </div>
+
+   
     <!-- BRUSHES -->
     <div class="card brush">
         <img src="brushset.jpg">
         <p>Brush Set</p>
         <p>250 EGP</p>
-        <button onclick="addToCart()">Add to Cart</button>
+        <button onclick="addToCart('Brush Set', 250)">
+    Add to Cart
+</button>
+
+    </div>
+
+    <div class="card brush">
+        <img src="beautyblender.jpg">
+        <p>Beautyblender Set</p>
+        <p>350 EGP</p>
+        <button onclick="addToCart('Beautyblender Set', 350)">
+    Add to Cart
+</button>
+
     </div>
 
 
