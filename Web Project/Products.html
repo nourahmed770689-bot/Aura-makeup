@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+    <a href="Home.html">Home</a>
+    <a href="Products.html">Products</a>
+    <a href="Tips.html">Tips</a>
+    <a href="Gallery.html">Gallery</a>
+    <a href="Contact.html">Contact</a>
+</div>
+
+<h1>Our Products 💄</h1>
+
+<!-- FILTER BUTTONS -->
+<div class="filters">
+    <button onclick="filterProducts('all')">All</button>
+    <button onclick="filterProducts('face')">Face</button>
+    <button onclick="filterProducts('eyes')">Eyes</button>
+    <button onclick="filterProducts('lips')">Lips</button>
+    <button onclick="filterProducts('brush')">Brushes</button>
+</div>
+
+<!-- CART -->
+<div class="cart">
+    🛒 Cart: <span id="cartCount">0</span>
+</div>
+
+<!-- PRODUCTS -->
+
+<div class="products">
+
+    <!-- FACE -->
+    <div class="card face">
+        <img src="foundation.jpg">
+        <p>Foundation</p>
+        <p>200 EGP</p>
+        <button onclick="addToCart('Foundation', 200)">
+    Add to Cart
+</button>
+    </div>
+
+    <div class="card face">
+        <img src="concealr.jpg">
+        <p>Concealer</p>
+        <p>150 EGP</p>
+        <button onclick="addToCart('Concealer', 150)">
+    Add to Cart
+</button>
+    </div>
+
+    <!-- EYES -->
+    <div class="card eyes">
+        <img src="mascara.jpg">
+        <p>Mascara</p>
+        <p>120 EGP</p>
+        <button onclick="addToCart('Mascara', 120)">
+    Add to Cart
+</button>
+    </div>
+
+    <div class="card eyes">
+        <img src="eyeliner.jpg">
+        <p>Eyeliner</p>
+        <p>100 EGP</p>
+        <button onclick="addToCart('Eyeliner', 100)">
+    Add to Cart
+</button>
+    </div>
+
+    <!-- LIPS -->
+    <div class="card lips">
+        <img src="lipstick.jpg">
+        <p>Lipstick</p>
+        <p>180 EGP</p>
+        <button onclick="addToCart()">Add to Cart</button>
+    </div>
+
+    <!-- BRUSHES -->
+    <div class="card brush">
+        <img src="brushset.jpg">
+        <p>Brush Set</p>
+        <p>250 EGP</p>
+        <button onclick="addToCart()">Add to Cart</button>
+    </div>
+
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
