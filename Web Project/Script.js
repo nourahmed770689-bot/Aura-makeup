@@ -157,3 +157,75 @@ window.addEventListener('DOMContentLoaded', function() {
         filterProducts('all');
     }
 });
+
+// Hero Slider Functionality
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = slides.length;
+
+function showSlide(index) {
+    const slidesContainer = document.querySelector('.slides-container');
+    slidesContainer.style.transform = `translateX(-${index * 33.333}%)`;
+
+    slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+    });
+
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    showSlide(currentSlide);
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    showSlide(currentSlide);
+}
+
+function goToSlide(index) {
+    currentSlide = index;
+    showSlide(currentSlide);
+}
+
+function resetSlideInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 4000);
+}
+
+// Auto slide every 4 seconds
+let slideInterval = setInterval(nextSlide, 4000);
+
+// Dot click handlers
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        goToSlide(index);
+        resetSlideInterval();
+    });
+});
+
+const prevArrow = document.querySelector('.slider-arrow.prev');
+const nextArrow = document.querySelector('.slider-arrow.next');
+
+if (prevArrow) {
+    prevArrow.addEventListener('click', () => {
+        prevSlide();
+        resetSlideInterval();
+    });
+}
+
+if (nextArrow) {
+    nextArrow.addEventListener('click', () => {
+        nextSlide();
+        resetSlideInterval();
+    });
+}
+
+// Initialize
+if (slides.length > 0) {
+    showSlide(0);
+}

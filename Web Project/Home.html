@@ -4,36 +4,63 @@
     <title>Home</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="top-banner">
+<div class="navbar">
+    <a href="Home.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+        <div id="dropdown-content" class="dropdown-content">
+            <a href="Products.html">All Products</a>
+            <a href="Products.html?category=face">Face</a>
+            <a href="Products.html?category=eyes">Eyes</a>
+            <a href="Products.html?category=lips">Lips</a>
+            <a href="Products.html?category=brush">Brushes</a>
+        </div>
+    </div>
+    <a href="Tips.html">Tips</a>
+    <a href="Gallery.html">Gallery</a>
+    <a href="Contact.html">Contact</a>
+    <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+</div>
 
-    <div class="navbar">
-        <a href="Home.html">Home</a>
-        <div class="dropdown">
-            <button class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
-            <div id="dropdown-content" class="dropdown-content">
-                <a href="Products.html">All Products</a>
-                <a href="Products.html?category=face">Face</a>
-                <a href="Products.html?category=eyes">Eyes</a>
-                <a href="Products.html?category=lips">Lips</a>
-                <a href="Products.html?category=brush">Brushes</a>
+<div class="hero-slider">
+    <div class="slides-container">
+        <div class="slide active">
+            <img src="WhatsApp Image 2026-04-26 at 8.49.07 PM.jpeg" alt="Banner">
+            <div class="slide-text">
+                <h2>30% Off on Face Products!</h2>
+                <p>Discover your beauty with our special offers.</p>
+                <a href="Products.html?category=face" class="cta-btn">Shop Now</a>
             </div>
         </div>
-        <a href="Tips.html">Tips</a>
-        <a href="Gallery.html">Gallery</a>
-        <a href="Contact.html">Contact</a>
-        <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+        <div class="slide">
+            <img src="I haven’t shared an image in a while, but this….jpg" alt="Eyes Offer">
+            <div class="slide-text">
+                <h2>Special Offer on Eye Products</h2>
+                <p>20% Off + Free Gift with Every Purchase.</p>
+                <a href="Products.html?category=eyes" class="cta-btn">Discover More</a>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="product photoshoot ideas.jpg" alt="Lips Offer">
+            <div class="slide-text">
+                <h2>25% Off on Lipsticks</h2>
+                <p>New colors to match your look.</p>
+                <a href="Products.html?category=lips" class="cta-btn">Buy Now</a>
+            </div>
+        </div>
     </div>
-
-    <img src="WhatsApp Image 2026-04-26 at 8.49.07 PM.jpeg" alt="Banner">
-
-    <div class="banner-text">
-        Discover Your Beauty 
+    <button class="slider-arrow prev" aria-label="Previous slide">&#10094;</button>
+    <button class="slider-arrow next" aria-label="Next slide">&#10095;</button>
+    <div class="slider-dots">
+        <span class="dot active" data-slide="0"></span>
+        <span class="dot" data-slide="1"></span>
+        <span class="dot" data-slide="2"></span>
     </div>
-
 </div>
 
 <h1 class="section-title">All Categories</h1>
@@ -50,7 +77,7 @@
     </div>
 
     <div class="card lips" onclick="window.location.href='Products.html?category=lips'">
-        <img src="product photoshoot ideas.jpg">
+        <img src="lipgloss.jpeg">
         <h3>Lips</h3>
     </div>
 
