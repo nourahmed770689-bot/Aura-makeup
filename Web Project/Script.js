@@ -120,23 +120,8 @@ function checkout() {
         alert("Your cart is empty!");
         return;
     }
-
-    let total = getCartTotal();
-    let message = "Your order total: " + total + " EGP\n\nItems:\n";
-
-    cart.forEach(item => {
-        message += item.name + " x" + item.quantity + " = " + (item.price * item.quantity) + " EGP\n";
-    });
-
-    message += "\nThank you for shopping with AURA! 💄";
-
-    alert(message);
-
-    // Clear cart after checkout
-    cart = [];
-    updateCartCount();
-    saveCartToLocalStorage();
-    displayCart();
+    // Redirect to checkout page
+    window.location.href = 'Checkout.html';
 }
 
 // Initialize cart on page load
