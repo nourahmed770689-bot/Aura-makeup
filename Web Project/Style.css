@@ -118,13 +118,146 @@ body.index-page {
     display: block;
 }
 
-/* Responsive navbar */
-@media (max-width: 768px) {
-    .navbar {
-        flex-wrap: wrap;
-        padding: 10px;
-        gap: 10px;
+    .dropdown-content.show {
+        display: block;
     }
+
+    .about-page {
+        max-width: 1180px;
+        margin: auto;
+        padding: 20px;
+        color: #3a1c1c;
+        line-height: 1.8;
+    }
+
+    .about-hero {
+        min-height: calc(100vh - 120px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(112,59,59,0.95), rgba(226,181,154,0.95));
+        color: #ffffff;
+        text-align: center;
+        padding: 80px 20px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    }
+
+    .about-hero-content {
+        max-width: 760px;
+    }
+
+    .eyebrow {
+        display: inline-block;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.85);
+    }
+
+    .about-hero h1 {
+        font-size: 44px;
+        margin: 0 0 18px;
+    }
+
+    .about-hero p {
+        font-size: 18px;
+        margin: 0 auto 25px;
+        max-width: 620px;
+        color: #f4e4d6;
+    }
+
+    .about-container {
+        margin-top: 40px;
+    }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    .about-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .about-card h2 {
+        margin-top: 0;
+        color: #703B3B;
+    }
+
+    .about-card p {
+        margin: 15px 0 0;
+        color: #4d2e2e;
+    }
+
+    .about-section {
+        margin-top: 40px;
+        padding: 40px 0;
+    }
+
+    .about-section-inner {
+        background: rgba(255,255,255,0.98);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+    }
+
+    .about-section h2 {
+        margin-top: 0;
+        color: #703B3B;
+    }
+
+    .about-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0 0;
+        display: grid;
+        gap: 15px;
+    }
+
+    .about-list li {
+        background: #f6e6dd;
+        padding: 16px 18px;
+        border-radius: 14px;
+        color: #4d2e2e;
+    }
+
+    .about-highlight {
+        background: transparent;
+    }
+
+    .cta-btn {
+        display: inline-block;
+        padding: 14px 28px;
+        background: #E2B59A;
+        color: #703B3B;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .cta-btn:hover {
+        background: #b88c6a;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive navbar */
+    @media (max-width: 992px) {
+        .about-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+      
+    }
+
+       
+    
+
     
     .navbar a {
         margin: 0 8px;
@@ -135,7 +268,7 @@ body.index-page {
     body {
         padding-top: 120px; /* More space for wrapped navbar on mobile */
     }
-}
+
 
 .hero-slider {
     position: relative;

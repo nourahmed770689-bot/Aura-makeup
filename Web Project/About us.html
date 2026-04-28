@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Makeup | About Us</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="navbar">
+    <a href="Home.html">Home</a>
+    <div class="dropdown">
+        <button onclick="toggleDropdown()" class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+        <div id="dropdown-content" class="dropdown-content">
+            <a href="Products.html">All Products</a>
+            <a href="Products.html?category=face">Face</a>
+            <a href="Products.html?category=eyes">Eyes</a>
+            <a href="Products.html?category=lips">Lips</a>
+            <a href="Products.html?category=brush">Brushes</a>
+        </div>
+    </div>
+    <a href="Tips.html">Tips</a>
+    <a href="About us.html">About Us</a>
+    <a href="Contact.html">Contact</a>
+    <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+</div>
+
+<main class="about-page">
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <span class="eyebrow">About Aura Makeup</span>
+            <h1>الجمال الطبيعي بحسّ عصري</h1>
+            <p>في Aura Makeup نؤمن أن المكياج هو أداة لتعزيز الثقة والتميز. نقدم تشكيلة من المنتجات الآمنة والمميزة التي تناسب كل بشرة وكل مناسبة.</p>
+            <a class="cta-btn" href="Products.html">اكتشفي منتجاتنا</a>
+        </div>
+    </section>
+
+    <section class="about-container">
+        <div class="about-grid">
+            <article class="about-card">
+                <h2>من نحن</h2>
+                <p>Aura Makeup علامة تجارية مصرية متخصصة في مستحضرات التجميل الراقية. هدفنا هو أن نجعل تجربة التجميل بسيطة وممتعة لكل امرأة.</p>
+            </article>
+            <article class="about-card">
+                <h2>مهمتنا</h2>
+                <p>تقديم منتجات آمنة وعالية الجودة، تساعدك على التعبير عن نفسك بثقة وبأسلوب عصري دائمًا.</p>
+            </article>
+            <article class="about-card">
+                <h2>رؤيتنا</h2>
+                <p>أن نصبح الوجهة الأولى للمكياج في الوطن العربي من خلال اختيار مستمر للمكونات الأفضل وتجربة تسوق سهلة وممتعة.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="about-section-inner">
+            <h2>لماذا تختارينا؟</h2>
+            <ul class="about-list">
+                <li><strong>منتجات مضمونة:</strong> اختيار بعناية من أجود المكونات.</li>
+                <li><strong>ألوان متنوعة:</strong> تناسب كل درجات البشرة والستايلات.</li>
+                <li><strong>خدمة سريعة:</strong> شحن موثوق وسهل داخل مصر.</li>
+                <li><strong>دعم مستمر:</strong> فريقنا دائمًا جاهز للإجابة عن أسئلتك.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="about-section about-highlight">
+        <div class="about-section-inner">
+            <h2>قصتنا</h2>
+            <p>بدأت Aura Makeup برؤية بسيطة: توفير منتجات مكياج ذات جودة عالية تبرز جمال كل امرأة. اليوم، نواصل تطوير تشكيلاتنا بناءً على خبرات الزبائن واحتياجات السوق الحديث.</p>
+        </div>
+    </section>
+</main>
+
+<script src="Script.js"></script>
+</body>
+</html>
