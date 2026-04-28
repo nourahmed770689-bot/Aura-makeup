@@ -1,55 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Categories</title>
+    <title>Home</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
-<div class="navbar">
-    <a href="Home.html">Home</a>
-    <div class="dropdown">
-        <button class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
-        <div id="dropdown-content" class="dropdown-content">
-            <a href="Products.html">All Products</a>
-            <a href="Products.html?category=face">Face</a>
-            <a href="Products.html?category=eyes">Eyes</a>
-            <a href="Products.html?category=lips">Lips</a>
-            <a href="Products.html?category=brush">Brushes</a>
-        </div>
+<div class="top-banner">
+
+    <div class="navbar">
+        <a href="Home.html">Home</a>
+        <a href="Products.html">Products</a>
+        <a href="Tips.html">Tips</a>
+        <a href="Gallery.html">Gallery</a>
+        <a href="Contact.html">Contact</a>
+        <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
     </div>
-    <a href="Tips.html">Tips</a>
-    <a href="Gallery.html">Gallery</a>
-    <a href="Contact.html">Contact</a>
-    <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+
+    <img src="WhatsApp Image 2026-04-26 at 8.49.07 PM.jpeg" alt="Banner">
+
+    <div class="banner-text">
+        Discover Your Beauty 
+    </div>
+
 </div>
 
-<h1>Shop by Category 💄</h1>
+<h1 class="section-title">All Categories</h1>
 
 <div class="categories">
-
-    <div class="card face" onclick="window.location.href='Products.html?category=face'">
+    <div class="card" onclick="window.location.href='Products.html?category=face'">
         <img src="Chanel Les Beiges Healthy Glow Foundation in No….jpg">
         <h3>Face</h3>
     </div>
 
-    <div class="card eyes" onclick="window.location.href='Products.html?category=eyes'">
+    <div class="card" onclick="window.location.href='Products.html?category=eyes'">
         <img src="I haven’t shared an image in a while, but this….jpg">
         <h3>Eyes</h3>
     </div>
 
-    <div class="card lips" onclick="window.location.href='Products.html?category=lips'">
+    <div class="card" onclick="window.location.href='Products.html?category=lips'">
         <img src="product photoshoot ideas.jpg">
         <h3>Lips</h3>
     </div>
 
-    <div class="card brush" onclick="window.location.href='Products.html?category=brush'">
+    <div class="card" onclick="window.location.href='Products.html?category=brush'">
         <img src="High-quality makeup brushes that blend perfectly….jpg">
         <h3>Brushes</h3>
     </div>
-
 </div>
 
 <script src="Script.js"></script>
