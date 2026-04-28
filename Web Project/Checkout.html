@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - AURA</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .checkout-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .checkout-container h1 {
+            font-family: 'Playfair Display', serif;
+            color: #703B3B;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .checkout-form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .order-summary {
+            background: #f7e6e0;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .order-summary h3 {
+            color: #703B3B;
+            margin-top: 0;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #703B3B;
+            font-size: 18px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #703B3B;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: Arial;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .checkout-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .place-order-btn,
+        .back-btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            min-width: 160px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        .place-order-btn {
+            background: #703B3B;
+            color: white;
+        }
+
+        .place-order-btn:hover {
+            background: #5a2f2f;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        .confirmation-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-actions {
+                flex-direction: column;
+            }
+
+            .place-order-btn,
+            .back-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="Home.html">Home</a>
+    <a href="Products.html">Products</a>
+    <a href="Tips.html">Tips</a>
+    <a href="Gallery.html">Gallery</a>
+    <a href="Contact.html">Contact</a>
+    <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+</div>
+
+<div class="checkout-container">
+    <h1>Checkout 💳</h1>
+
+    <div class="confirmation-message" id="confirmationMessage">
+        <h3>✅ Order Placed Successfully!</h3>
+        <p id="orderDetails"></p>
+    </div>
+
+    <div class="order-summary">
+        <h3>Order Summary</h3>
+        <div id="orderSummary"></div>
+    </div>
+
+    <form class="checkout-form" id="checkoutForm" onsubmit="placeOrder(event)">
+        <div class="error-message" id="errorMessage"></div>
+
+        <h3 style="color: #703B3B; margin-top: 0;">Customer Information</h3>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+
+        <h3 style="color: #703B3B;">Shipping Address</h3>
+
+        <div class="form-group">
+            <label for="address">Address *</label>
+            <input type="text" id="address" name="address" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="zipCode">Zip Code *</label>
+                <input type="text" id="zipCode" name="zipCode" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes" name="notes" placeholder="Special requests or delivery instructions..."></textarea>
+        </div>
+
+        <div class="checkout-actions">
+            <button type="button" class="back-btn" onclick="window.location.href='Cart.html'">Back to Cart</button>
+            <button type="submit" class="place-order-btn">Place Order</button>
+        </div>
+    </form>
+</div>
+
+<script src="script.js"></script>
+<script>
+// Display order summary on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadCartFromLocalStorage();
+    displayOrderSummary();
+});
+
+function displayOrderSummary() {
+    let summaryDiv = document.getElementById('orderSummary');
+    
+    cart.forEach((item) => {
+        let itemDiv = document.createElement('div');
+        itemDiv.className = 'order-item';
+        itemDiv.innerHTML = `
+            <span>${item.name} x ${item.quantity}</span>
+            <span>${(item.price * item.quantity)} EGP</span>
+        `;
+        summaryDiv.appendChild(itemDiv);
+    });
+
+    let totalDiv = document.createElement('div');
+    totalDiv.className = 'order-total';
+    totalDiv.innerHTML = `
+        <span>Total:</span>
+        <span>${getCartTotal()} EGP</span>
+    `;
+    summaryDiv.appendChild(totalDiv);
+}
+
+function placeOrder(event) {
+    event.preventDefault();
+
+    // Get form data
+    let firstName = document.getElementById('firstName').value.trim();
+    let lastName = document.getElementById('lastName').value.trim();
+    let email = document.getElementById('email').value.trim();
+    let phone = document.getElementById('phone').value.trim();
+    let address = document.getElementById('address').value.trim();
+    let city = document.getElementById('city').value.trim();
+    let zipCode = document.getElementById('zipCode').value.trim();
+
+    // Validate form
+    if (!firstName || !lastName || !email || !phone || !address || !city || !zipCode) {
+        showError('Please fill in all required fields');
+        return;
+    }
+
+    // Generate order number
+    let orderNumber = 'AURA-' + Math.floor(Math.random() * 1000000);
+
+    // Create order details
+    let orderDetails = `
+        <strong>Order Number: ${orderNumber}</strong><br>
+        <strong>Customer:</strong> ${firstName} ${lastName}<br>
+        <strong>Email:</strong> ${email}<br>
+        <strong>Phone:</strong> ${phone}<br>
+        <strong>Address:</strong> ${address}, ${city}, ${zipCode}<br>
+        <strong>Order Total:</strong> ${getCartTotal()} EGP<br>
+        <br>
+        <strong>Items:</strong><br>
+    `;
+
+    cart.forEach(item => {
+        orderDetails += `${item.name} x${item.quantity} = ${(item.price * item.quantity)} EGP<br>`;
+    });
+
+    orderDetails += `<br>Your order will be delivered within 3-5 business days.<br>Enjoy your AURA products! 💄`;
+
+    // Show confirmation
+    document.getElementById('checkoutForm').style.display = 'none';
+    document.getElementById('orderDetails').innerHTML = orderDetails;
+    document.getElementById('confirmationMessage').style.display = 'block';
+
+    // Clear cart
+    cart = [];
+    updateCartCount();
+    saveCartToLocalStorage();
+
+    // Scroll to top
+    window.scrollTo(0, 0);
+
+    // Show continue shopping button after 2 seconds
+    setTimeout(() => {
+        let continueBtn = document.createElement('button');
+        continueBtn.className = 'continue-shopping-btn';
+        continueBtn.innerHTML = 'Continue Shopping';
+        continueBtn.onclick = () => window.location.href = 'Products.html';
+        continueBtn.style.marginTop = '20px';
+        continueBtn.style.marginRight = '10px';
+        
+        let homeBtn = document.createElement('button');
+        homeBtn.className = 'back-btn';
+        homeBtn.innerHTML = 'Back to Home';
+        homeBtn.onclick = () => window.location.href = 'Home.html';
+        homeBtn.style.marginTop = '20px';
+
+        document.querySelector('.checkout-container').appendChild(continueBtn);
+        document.querySelector('.checkout-container').appendChild(homeBtn);
+    }, 1500);
+}
+
+function showError(message) {
+    let errorDiv = document.getElementById('errorMessage');
+    errorDiv.innerText = message;
+    errorDiv.style.display = 'block';
+    setTimeout(() => {
+        errorDiv.style.display = 'none';
+    }, 4000);
+}
+</script>
+</body>
+</html>
