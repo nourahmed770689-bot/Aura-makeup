@@ -10,7 +10,16 @@
 
 <div class="navbar">
     <a href="Home.html">Home</a>
-    <a href="Products.html">Products</a>
+    <div class="dropdown">
+        <button onclick="toggleDropdown()" class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+        <div id="dropdown-content" class="dropdown-content">
+            <a href="Products.html">All Products</a>
+            <a href="Products.html?category=face">Face</a>
+            <a href="Products.html?category=eyes">Eyes</a>
+            <a href="Products.html?category=lips">Lips</a>
+            <a href="Products.html?category=blusher">Blusher</a>
+        </div>
+    </div>
     <a href="Tips.html">Tips</a>
     <a href="About us.html">About Us</a>
     <a href="Contact.html">Contact</a>
