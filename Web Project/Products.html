@@ -13,6 +13,7 @@
     <a href="Tips.html">Tips</a>
     <a href="Gallery.html">Gallery</a>
     <a href="Contact.html">Contact</a>
+    <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
 </div>
 <br><br><br>
 <h1>Our Products </h1>
@@ -26,11 +27,6 @@
     <button onclick="filterProducts('brush')">Brushes</button>
 </div>
 
-<!-- CART -->
-<div class="cart">
-    🛒 Cart: <span id="cartCount">0</span>
-</div>
-
 <!-- PRODUCTS -->
 
 <div class="products">
@@ -40,18 +36,14 @@
         <img src="foundation.jpg">
         <p>Foundation</p>
         <p>200 EGP</p>
-        <button onclick="addToCart('Foundation', 200)">
-    Add to Cart
-</button>
+        <button onclick="addToCart('Foundation', 200)">Add to Cart</button>
     </div>
 
     <div class="card face">
         <img src="concealr.jpg">
         <p>Concealer</p>
         <p>150 EGP</p>
-        <button onclick="addToCart('Concealer', 150)">
-    Add to Cart
-</button>
+        <button onclick="addToCart('Concealer', 150)">Add to Cart</button>
     </div>
 
     <!-- EYES -->
@@ -59,18 +51,14 @@
         <img src="mascara.jpg">
         <p>Mascara</p>
         <p>120 EGP</p>
-        <button onclick="addToCart('Mascara', 120)">
-    Add to Cart
-</button>
+        <button onclick="addToCart('Mascara', 120)">Add to Cart</button>
     </div>
 
     <div class="card eyes">
         <img src="eyeliner.jpg">
         <p>Eyeliner</p>
         <p>100 EGP</p>
-        <button onclick="addToCart('Eyeliner', 100)">
-    Add to Cart
-</button>
+        <button onclick="addToCart('Eyeliner', 100)">Add to Cart</button>
     </div>
 
     <!-- LIPS -->
@@ -78,7 +66,7 @@
         <img src="lipstick.jpg">
         <p>Lipstick</p>
         <p>180 EGP</p>
-        <button onclick="addToCart()">Add to Cart</button>
+        <button onclick="addToCart('Lipstick', 180)">Add to Cart</button>
     </div>
 
     <!-- BRUSHES -->
@@ -86,7 +74,7 @@
         <img src="brushset.jpg">
         <p>Brush Set</p>
         <p>250 EGP</p>
-        <button onclick="addToCart()">Add to Cart</button>
+        <button onclick="addToCart('Brush Set', 250)">Add to Cart</button>
     </div>
 
 
