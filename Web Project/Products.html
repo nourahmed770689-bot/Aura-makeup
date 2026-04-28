@@ -10,22 +10,23 @@ z<!DOCTYPE html>
 
 <div class="navbar">
     <a href="Home.html">Home</a>
-    <div class="dropdown">
-        <button onclick="toggleDropdown()" class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
-        <div id="dropdown-content" class="dropdown-content">
-            <a href="#" onclick="filterProducts('all')">All Products</a>
-            <a href="#" onclick="filterProducts('face')">Face</a>
-            <a href="#" onclick="filterProducts('eyes')">Eyes</a>
-            <a href="#" onclick="filterProducts('lips')">Lips</a>
-            <a href="#" onclick="filterProducts('brush')">Brushes</a>
-        </div>
-    </div>
+    <a href="Products.html">Products</a>
     <a href="Tips.html">Tips</a>
     <a href="Gallery.html">Gallery</a>
     <a href="Contact.html">Contact</a>
+    <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
 </div>
 
 <h1>Our Products </h1>
+
+<!-- FILTERS -->
+<div class="filters">
+    <button onclick="filterProducts('all')">All</button>
+    <button onclick="filterProducts('face')">Face</button>
+    <button onclick="filterProducts('eyes')">Eyes</button>
+    <button onclick="filterProducts('lips')">Lips</button>
+    <button onclick="filterProducts('brush')">Brushes</button>
+</div>
 
 <!-- CART -->
 <div class="cart">

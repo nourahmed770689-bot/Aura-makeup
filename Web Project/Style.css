@@ -56,6 +56,12 @@ body {
     }
 }
 
+.filters button {
+    margin: 5px;
+    padding: 8px;
+    cursor: pointer;
+}
+
 .top-banner {
     position: relative;
     width: 100%;
