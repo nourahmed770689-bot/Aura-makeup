@@ -151,7 +151,10 @@ window.addEventListener('DOMContentLoaded', function() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category');
-    if (category) {
+    const price = urlParams.get('price');
+    if (price === 'over200') {
+        filterProducts('over200');
+    } else if (category) {
         filterProducts(category);
     } else if (document.querySelector('.products')) {
         filterProducts('all');

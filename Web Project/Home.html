@@ -18,13 +18,17 @@
             <a href="Products.html?category=face">Face</a>
             <a href="Products.html?category=eyes">Eyes</a>
             <a href="Products.html?category=lips">Lips</a>
-            <a href="Products.html?category=brush">Brushes</a>
+            <a href="Products.html?category=blusher">Blusher</a>
         </div>
     </div>
     <a href="Tips.html">Tips</a>
     <a href="Gallery.html">Gallery</a>
     <a href="Contact.html">Contact</a>
     <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+</div>
+
+<div class="shipping-banner" onclick="window.location.href='Products.html?price=over200'">
+    FREE SHIPPING ON ORDERS OVER 200 EGP
 </div>
 
 <div class="hero-slider">
@@ -81,12 +85,24 @@
         <h3>Lips</h3>
     </div>
 
-    <div class="card brush" onclick="window.location.href='Products.html?category=brush'">
-        <img src="High-quality makeup brushes that blend perfectly….jpg">
-        <h3>Brushes</h3>
+    <div class="card blusher" onclick="window.location.href='Products.html?category=blusher'">
+        <img src="liquid blush.jpeg">
+        <h3>Blusher</h3>
     </div>
 </div>
 
 <script src="Script.js"></script>
+
+<script>
+window.addEventListener('scroll', function() {
+    const banner = document.querySelector('.shipping-banner');
+    if (window.scrollY > 50) { // إخفاء بعد تمرير 50px
+        banner.classList.add('hidden');
+    } else {
+        banner.classList.remove('hidden');
+    }
+});
+</script>
+
 </body>
 </html>

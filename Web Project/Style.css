@@ -9,6 +9,31 @@ body.index-page {
     background: initial;
 }
 
+/* SHIPPING BANNER */
+.shipping-banner {
+    position: relative;
+    top: 0;
+    width: 100%;
+    background: #703B3B;
+    color: #E2B59A;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 999;
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+}
+
+.shipping-banner:hover {
+    background: #5a2f2f;
+}
+
+.shipping-banner.hidden {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
 /* NAVBAR */
 .navbar {
     position: fixed;
