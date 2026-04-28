@@ -1,16 +1,18 @@
 body {
     margin: 0;
     font-family: Arial;
+     background-color: #f7e6e0;
 }
 
 /* NAVBAR */
 .navbar {
     position: absolute;
-    top: 25%;
+    top: 0;
     left: 0;
      width: 100%; 
      justify-content: center; 
     gap: 20px;
+    display: flex;
     
     background: #703B3B;
     padding: 15px;
@@ -44,7 +46,7 @@ body {
 
 /* HERO VIDEO */
 .hero {
-    height: 90vh;
+    height: 98vh;
     position: relative;
     overflow: hidden;
 }
