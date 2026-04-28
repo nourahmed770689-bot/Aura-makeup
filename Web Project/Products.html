@@ -1,4 +1,4 @@
-z<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Products</title>
@@ -10,7 +10,16 @@ z<!DOCTYPE html>
 
 <div class="navbar">
     <a href="Home.html">Home</a>
-    <a href="Products.html">Products</a>
+    <div class="dropdown">
+        <button class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+        <div id="dropdown-content" class="dropdown-content">
+            <a href="#" onclick="filterProducts('all')">All Products</a>
+            <a href="#" onclick="filterProducts('face')">Face</a>
+            <a href="#" onclick="filterProducts('eyes')">Eyes</a>
+            <a href="#" onclick="filterProducts('lips')">Lips</a>
+            <a href="#" onclick="filterProducts('brush')">Brushes</a>
+        </div>
+    </div>
     <a href="Tips.html">Tips</a>
     <a href="Gallery.html">Gallery</a>
     <a href="Contact.html">Contact</a>
