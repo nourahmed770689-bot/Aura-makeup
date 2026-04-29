@@ -108,10 +108,12 @@ function removeCartItem(index) {
     renderCartItems();
 }
 
-function filterProducts(category) {
+function filterProducts(category, type) {
     let items = document.getElementsByClassName('card');
     for (let i = 0; i < items.length; i++) {
-        if (category === 'all' || items[i].classList.contains(category)) {
+        const matchesCategory = category === 'all' || items[i].classList.contains(category);
+        const matchesType = !type || items[i].dataset.type === type;
+        if (matchesCategory && matchesType) {
             items[i].style.display = 'block';
         } else {
             items[i].style.display = 'none';
@@ -151,11 +153,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category');
+    const type = urlParams.get('type');
     const price = urlParams.get('price');
     if (price === 'over200') {
         filterProducts('over200');
     } else if (category) {
-        filterProducts(category);
+        filterProducts(category, type);
     } else if (document.querySelector('.products')) {
         filterProducts('all');
     }
