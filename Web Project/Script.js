@@ -235,3 +235,17 @@ if (nextArrow) {
 if (slides.length > 0) {
     showSlide(0);
 }
+function toggleFaceSubcategories() {
+    const panel = document.getElementById('face-subcategories');
+
+    if (!panel) return;
+
+    panel.classList.toggle('hidden');
+
+    if (!panel.classList.contains('hidden')) {
+        panel.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}

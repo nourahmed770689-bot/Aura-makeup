@@ -71,7 +71,7 @@
 <h1 class="section-title">All Categories</h1>
 
 <div class="categories">
-    <div class="card face" onclick="window.location.href='Products.html?category=face'">
+    <div class="card face" onclick="toggleFaceSubcategories()">
         <img src="Chanel Les Beiges Healthy Glow Foundation in No….jpg">
         <h3>Face</h3>
     </div>
@@ -113,6 +113,34 @@
     </div>
 </div>
 
+<div id="face-subcategories" class="subcategories hidden">
+
+    <div class="subcategories-header">
+        <h2>Choose your face product</h2>
+        <button class="close-subcategories" onclick="toggleFaceSubcategories(); event.stopPropagation();">×</button>
+    </div>
+
+    <div class="subcategories-cards">
+
+        <div class="card" onclick="window.location.href='Products.html?category=face&type=foundation'">
+            <img src="foundation.jpeg">
+            <h3>Foundation</h3>
+        </div>
+
+        <div class="card" onclick="window.location.href='Products.html?category=face&type=concealer'">
+            <img src="Highlight.jpg">
+            <h3>Contour & Highlight</h3>
+        </div>
+
+        <div class="card" onclick="window.location.href='Products.html?category=face&type=powder'">
+            <img src="loosepowder.jpg">
+            <h3>Powder</h3>
+        </div>
+
+    </div>
+
+</div>
+
 <script src="Script.js"></script>
 
 <script>
@@ -129,6 +157,16 @@ function toggleEyeSubcategories() {
     const panel = document.getElementById('eye-subcategories');
     if (!panel) return;
     panel.classList.toggle('hidden');
+    if (!panel.classList.contains('hidden')) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+function toggleFaceSubcategories() {
+    const panel = document.getElementById('face-subcategories');
+    if (!panel) return;
+
+    panel.classList.toggle('hidden');
+
     if (!panel.classList.contains('hidden')) {
         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
