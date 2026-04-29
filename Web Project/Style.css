@@ -62,6 +62,14 @@ body.index-page {
     transition: all 0.3s ease;
 }
 
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #E2B59A;
+    margin: 0 15px;
+}
+
 .navbar a:hover {
     color: #b88c6a;
     background-color: rgba(255, 255, 255, 0.1);
