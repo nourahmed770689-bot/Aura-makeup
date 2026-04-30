@@ -249,3 +249,47 @@ function toggleFaceSubcategories() {
         });
     }
 }
+document.addEventListener("DOMContentLoaded", function () {
+
+    function createStars(rate) {
+        let starsHTML = "";
+
+        for (let i = 1; i <= 5; i++) {
+            if (rate >= i) {
+                starsHTML += `<i class="fas fa-star"></i>`;
+            } else if (rate >= i - 0.5) {
+                starsHTML += `<i class="fas fa-star-half-alt"></i>`;
+            } else {
+                starsHTML += `<i class="far fa-star"></i>`;
+            }
+        }
+
+        return starsHTML;
+    }
+
+    document.querySelectorAll(".rating").forEach(rating => {
+        let rate = parseFloat(rating.dataset.rate);
+        let starsBox = rating.querySelector(".stars");
+
+        starsBox.innerHTML = createStars(rate);
+
+        // hover rating (تغيير اللون/التفاعل)
+        let stars = starsBox.querySelectorAll("i");
+
+        stars.forEach((star, index) => {
+            star.addEventListener("mouseover", () => {
+                stars.forEach((s, i) => {
+                    s.style.color = i <= index ? "#850E35" : "#ccc";
+                });
+            });
+
+            star.addEventListener("mouseout", () => {
+                stars.forEach(s => {
+                    s.style.color = "#850E35";
+                });
+            });
+        });
+    });
+
+});
+

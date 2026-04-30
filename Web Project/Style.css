@@ -200,7 +200,7 @@ body.index-page {
 
     .about-card p {
         margin: 15px 0 0;
-        color: #4d2e2e;
+        color: #703B3B;
     }
 
     .about-section {
@@ -956,4 +956,72 @@ button:hover {
 .cart {
     margin: 10px;
     font-weight: bold;
+}
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+.stars i {
+    color: #850E35;
+    margin: 0 1px;
+    transition: 0.3s;
+}
+
+.rate-number {
+    color: #850E35;
+    font-weight: bold;
+}
+
+/* Hover effect */
+.card:hover .stars i {
+    transform: scale(1.2);
+}
+/*top rated section*/
+
+.section-title{
+    text-align: center;
+    margin-top: 40px;
+    color: #850E35;
+}
+
+.top-rated-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+.top-rated{
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 20px;
+    padding: 10px;
+}
+
+.top-rated::-webkit-scrollbar{
+    display: none;
+}
+
+.top-rated .card{
+    min-width: 200px;
+}
+
+/* الأسهم */
+.arrow{
+    background-color: #850E35;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 50%;
+}
+
+.arrow:hover{
+    background-color: #a61b4d;
 }
