@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
@@ -87,14 +89,8 @@ body.index-page {
     margin: 0 15px;
     text-decoration: none;
     cursor: pointer;
-    font-family: Arial;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+    font-family: inherit;
 }
-
 .dropbtn:hover {
     color: #EE6983;
     background-color: rgba(255, 255, 255, 0.1);
@@ -315,7 +311,7 @@ body.index-page {
     text-align: center;
     color: white;
     z-index: 1;
-    background: rgba(0, 0, 0, 0.5); /* خلفية شفافة للنص */
+    background: rgba(0, 0, 0, 0.5); /* Ø®Ù„ÙÙŠØ© Ø´ÙØ§ÙØ© Ù„Ù„Ù†Øµ */
     padding: 20px;
     border-radius: 10px;
 }
@@ -437,7 +433,7 @@ h1 {
     object-fit: cover;
 }
 
-/* TEXT BOX فوق الصورة */
+/* TEXT BOX ÙÙˆÙ‚ Ø§Ù„ØµÙˆØ±Ø© */
 .overlay-box {
     position: absolute;
     top: 50%;
@@ -455,8 +451,7 @@ h1 {
 /* TEXT */
 .overlay-box h1 {
     margin: 0;
-    /* font of aura*/
-     font-family: 'Playfair Display', serif;
+    font-family: inherit;
     font-size: 65px;
     letter-spacing: 4px;
     color: #111;
@@ -476,7 +471,7 @@ h1 {
     margin-top: 10px;
 }
 
-/* Hover على الزرار */
+/* Hover Ø¹Ù„Ù‰ Ø§Ù„Ø²Ø±Ø§Ø± */
 .overlay-box button:hover {
     background: #EE6983;
     color: black;
@@ -491,7 +486,7 @@ h1 {
 .section-title {
     text-align: left;
     text-decoration: underline;
-    font-family: 'Times New Roman', serif;
+    font-family: inherit;
     font-size: 36px;
     font-weight: normal;
     margin-top: 30px;
@@ -599,7 +594,7 @@ h1 {
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-/* Hover 🔥 */
+/* Hover ðŸ”¥ */
 .card:hover {
     transform: translateY(-10px) scale(1.05);
     box-shadow: 0 15px 30px rgba(0,0,0,0.3);
@@ -691,7 +686,7 @@ button:hover {
 }
 
 .cart-container h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: inherit;
     color: #703B3B;
     text-align: center;
     margin-bottom: 30px;
