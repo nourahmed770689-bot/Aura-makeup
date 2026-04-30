@@ -25,7 +25,21 @@
     <a href="About us.html">About Us</a>
     <a href="Contact.html">Contact</a>
     <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+    <div class="search-icon" onclick="openSearchPopup()">
+        <i class="fas fa-search"></i>
+    </div>
 </div>
+
+<div id="searchOverlay" class="search-overlay" onclick="closeSearchPopupOnOverlay(event)">
+    <div class="search-popup">
+        <form onsubmit="performSearch(); return false;">
+            <input type="text" id="searchPopupInput" placeholder="WHAT ARE YOU LOOKING FOR?" autocomplete="off">
+            <button type="submit"> Search</button>
+        </form>
+    </div>
+    <button class="close-search" onclick="closeSearchPopup()">✕</button>
+</div>
+
 
 <h2 class="page-title">Get in Touch</h2>
 

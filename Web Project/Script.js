@@ -292,4 +292,186 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+// ========== SEARCH POPUP FUNCTIONS ==========
 
+function openSearchPopup() {
+    const overlay = document.getElementById('searchOverlay');
+    if (overlay) {
+        overlay.classList.add('show');
+        setTimeout(() => {
+            const input = document.getElementById('searchPopupInput');
+            if (input) input.focus();
+        }, 100);
+    }
+}
+
+function closeSearchPopup() {
+    const overlay = document.getElementById('searchOverlay');
+    if (overlay) {
+        overlay.classList.remove('show');
+    }
+}
+
+function closeSearchPopupOnOverlay(event) {
+    if (event.target === document.getElementById('searchOverlay')) {
+        closeSearchPopup();
+    }
+}
+
+// دالة البحث الرئيسية
+function performSearch() {
+    const searchTerm = document.getElementById('searchPopupInput').value.toLowerCase().trim();
+    
+    console.log("Searching for:", searchTerm); // للتأكد من الشغل
+    
+    // لو مافيش كلمة بحث، أغلق وخلص
+    if (searchTerm === '') {
+        closeSearchPopup();
+        return;
+    }
+    
+    const allProducts = document.querySelectorAll('.products .card');
+    
+    // لو مش في صفحة المنتجات، حول المستخدم
+    if (allProducts.length === 0) {
+        closeSearchPopup();
+        window.location.href = 'Products.html?search=' + encodeURIComponent(searchTerm);
+        return;
+    }
+    
+    // تنقية المنتجات
+    let hasVisibleProducts = false;
+    
+    allProducts.forEach(product => {
+        // جلب اسم المنتج (أول عنصر p)
+        let productName = "";
+        const productNameElement = product.querySelector('p:first-of-type');
+        if (productNameElement) {
+            productName = productNameElement.innerText.toLowerCase();
+        }
+        
+        // جلب اسم المنتج من عناصر تانية لو لازم
+        const productTitle = product.querySelector('h3');
+        if (productTitle && productName === "") {
+            productName = productTitle.innerText.toLowerCase();
+        }
+        
+        console.log("Product:", productName, "Includes?", productName.includes(searchTerm));
+        
+        if (productName.includes(searchTerm)) {
+            product.style.display = 'block';
+            hasVisibleProducts = true;
+        } else {
+            product.style.display = 'none';
+        }
+    });
+    
+    // إظهار رسالة إذا مافيش نتائج
+    let noResultsMsg = document.getElementById('noResultsMsg');
+    if (!hasVisibleProducts) {
+        if (!noResultsMsg) {
+            noResultsMsg = document.createElement('div');
+            noResultsMsg.id = 'noResultsMsg';
+            noResultsMsg.style.textAlign = 'center';
+            noResultsMsg.style.padding = '40px';
+            noResultsMsg.style.fontSize = '18px';
+            noResultsMsg.style.color = '#561C24';
+            noResultsMsg.style.background = '#fff';
+            noResultsMsg.style.borderRadius = '15px';
+            noResultsMsg.style.margin = '30px auto';
+            noResultsMsg.style.maxWidth = '500px';
+            noResultsMsg.innerHTML = `
+                <i class="fas fa-search" style="font-size: 48px; color: #ccc; margin-bottom: 15px; display: block;"></i>
+                ❌ No products found matching "<strong style="color:#EE6983">${searchTerm}</strong>"
+                <br><br>
+                <button onclick="resetSearch()" style="background: #703B3B; color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer;">Clear Search</button>
+            `;
+            const productsContainer = document.querySelector('.products');
+            if (productsContainer) {
+                productsContainer.parentNode.insertBefore(noResultsMsg, productsContainer);
+            }
+        } else {
+            noResultsMsg.innerHTML = `
+                <i class="fas fa-search" style="font-size: 48px; color: #ccc; margin-bottom: 15px; display: block;"></i>
+                ❌ No products found matching "<strong style="color:#EE6983">${searchTerm}</strong>"
+                <br><br>
+                <button onclick="resetSearch()" style="background: #703B3B; color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer;">Clear Search</button>
+            `;
+            noResultsMsg.style.display = 'block';
+        }
+    } else if (noResultsMsg) {
+        noResultsMsg.style.display = 'none';
+    }
+    
+    closeSearchPopup();
+}
+
+// دالة إعادة ضبط البحث
+function resetSearch() {
+    const allProducts = document.querySelectorAll('.products .card');
+    allProducts.forEach(product => {
+        product.style.display = 'block';
+    });
+    
+    const noResultsMsg = document.getElementById('noResultsMsg');
+    if (noResultsMsg) {
+        noResultsMsg.style.display = 'none';
+    }
+    
+    const searchInput = document.getElementById('searchPopupInput');
+    if (searchInput) {
+        searchInput.value = '';
+    }
+}
+
+// دالة لإظهار كل المنتجات (للتأكد)
+function showAllProducts() {
+    const allProducts = document.querySelectorAll('.products .card');
+    allProducts.forEach(product => {
+        product.style.display = 'block';
+    });
+    const noResultsMsg = document.getElementById('noResultsMsg');
+    if (noResultsMsg) {
+        noResultsMsg.style.display = 'none';
+    }
+}
+
+// البحث عند الضغط على Enter
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchPopupInput');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                performSearch();
+            }
+        });
+    }
+    
+    // لو في search query في الرابط (مثلاً Products.html?search=gloss)
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
+    if (searchQuery && document.getElementById('searchPopupInput')) {
+        document.getElementById('searchPopupInput').value = searchQuery;
+        setTimeout(() => {
+            performSearch();
+        }, 300);
+    }
+});
+// ========== NEWSLETTER SUBSCRIPTION ==========
+function subscribeNewsletter(event) {
+    event.preventDefault();
+    const email = document.getElementById('newsletterEmail').value;
+    
+    if (email) {
+        showToast(`📧 Thanks for subscribing! Check your inbox.`);
+        document.getElementById('newsletterEmail').value = '';
+    }
+}
+// ========== SCROLL TO OFFERS SECTION ==========
+function scrollToOffers() {
+    const offersSection = document.querySelector('.hero-slider');
+    if (offersSection) {
+        offersSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
