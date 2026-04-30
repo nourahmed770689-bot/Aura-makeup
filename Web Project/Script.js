@@ -108,10 +108,12 @@ function removeCartItem(index) {
     renderCartItems();
 }
 
-function filterProducts(category) {
+function filterProducts(category, type) {
     let items = document.getElementsByClassName('card');
     for (let i = 0; i < items.length; i++) {
-        if (category === 'all' || items[i].classList.contains(category)) {
+        const matchesCategory = category === 'all' || items[i].classList.contains(category);
+        const matchesType = !type || items[i].dataset.type === type;
+        if (matchesCategory && matchesType) {
             items[i].style.display = 'block';
         } else {
             items[i].style.display = 'none';
@@ -151,11 +153,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category');
+    const type = urlParams.get('type');
     const price = urlParams.get('price');
     if (price === 'over200') {
         filterProducts('over200');
     } else if (category) {
-        filterProducts(category);
+        filterProducts(category, type);
     } else if (document.querySelector('.products')) {
         filterProducts('all');
     }
@@ -232,3 +235,61 @@ if (nextArrow) {
 if (slides.length > 0) {
     showSlide(0);
 }
+function toggleFaceSubcategories() {
+    const panel = document.getElementById('face-subcategories');
+
+    if (!panel) return;
+
+    panel.classList.toggle('hidden');
+
+    if (!panel.classList.contains('hidden')) {
+        panel.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+document.addEventListener("DOMContentLoaded", function () {
+
+    function createStars(rate) {
+        let starsHTML = "";
+
+        for (let i = 1; i <= 5; i++) {
+            if (rate >= i) {
+                starsHTML += `<i class="fas fa-star"></i>`;
+            } else if (rate >= i - 0.5) {
+                starsHTML += `<i class="fas fa-star-half-alt"></i>`;
+            } else {
+                starsHTML += `<i class="far fa-star"></i>`;
+            }
+        }
+
+        return starsHTML;
+    }
+
+    document.querySelectorAll(".rating").forEach(rating => {
+        let rate = parseFloat(rating.dataset.rate);
+        let starsBox = rating.querySelector(".stars");
+
+        starsBox.innerHTML = createStars(rate);
+
+        // hover rating (تغيير اللون/التفاعل)
+        let stars = starsBox.querySelectorAll("i");
+
+        stars.forEach((star, index) => {
+            star.addEventListener("mouseover", () => {
+                stars.forEach((s, i) => {
+                    s.style.color = i <= index ? "#850E35" : "#ccc";
+                });
+            });
+
+            star.addEventListener("mouseout", () => {
+                stars.forEach(s => {
+                    s.style.color = "#850E35";
+                });
+            });
+        });
+    });
+
+});
+
