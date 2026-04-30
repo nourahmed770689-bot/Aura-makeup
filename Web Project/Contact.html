@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -74,18 +76,18 @@
         <div class="form-card">
             <span class="tag">Send a Message</span>
             <h3>We’re here to help</h3>
-            <form action="db.php" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Email Address" required>
-                <input type="text" name="phone" placeholder="Phone Number">
-                <select name="subject" required>
+            <form action="DB_contact.php" method="POST">
+                <input type="text" name="Name" placeholder="Your Name" required>
+                <input type="email" name="Email" placeholder="Email Address" required>
+                <input type="text" name="Phone" placeholder="Phone Number">
+                <select name="Subject" required>
                     <option value="">Select Subject</option>
                     <option value="product-advice">Product Advice</option>
                     <option value="order-support">Order Support</option>
                     <option value="collaboration">Collaboration</option>
                     <option value="general">General Question</option>
                 </select>
-                <textarea name="message" placeholder="Write your message here..." rows="6" required></textarea>
+                <textarea name="Message" placeholder="Write your message here..." rows="6" required></textarea>
                 <button type="submit">Send Message</button>
             </form>
             <p class="form-note">We usually respond within 24 hours.</p>
