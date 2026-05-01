@@ -475,42 +475,46 @@ function scrollToOffers() {
         offersSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
-// ========== LOGIN & SIGNUP MODALS ==========
-function openLoginModal() {
-    document.getElementById('loginModal').classList.add('show');
-}
-
-function closeLoginModal() {
-    document.getElementById('loginModal').classList.remove('show');
-}
-
-function openSignupModal() {
-    document.getElementById('signupModal').classList.add('show');
-}
-
-function closeSignupModal() {
-    document.getElementById('signupModal').classList.remove('show');
-}
-
-// إغلاق المودال إذا ضغط المستخدم خارجها
-window.onclick = function(event) {
-    const loginModal = document.getElementById('loginModal');
-    const signupModal = document.getElementById('signupModal');
-    if (event.target === loginModal) {
-        closeLoginModal();
+// ========== FIX: Add missing function ==========
+function showNewsletterMessage(message, type) {
+    // إزالة أي رسالة قديمة
+    const oldMessage = document.querySelector('.newsletter-message');
+    if (oldMessage) {
+        oldMessage.remove();
     }
-    if (event.target === signupModal) {
-        closeSignupModal();
+    
+    // إنشاء رسالة جديدة
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `newsletter-message ${type}`;
+    messageDiv.innerHTML = message;
+    
+    // إضافة الرسالة بعد الفورم
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.parentNode.insertBefore(messageDiv, newsletterForm.nextSibling);
+    } else {
+        // إذا مش في newsletter، نضيفها في body
+        document.body.appendChild(messageDiv);
+        messageDiv.style.position = 'fixed';
+        messageDiv.style.bottom = '20px';
+        messageDiv.style.left = '50%';
+        messageDiv.style.transform = 'translateX(-50%)';
+        messageDiv.style.zIndex = '9999';
     }
+    
+    // إخفاء الرسالة بعد 4 ثواني
+    setTimeout(() => {
+        messageDiv.style.opacity = '0';
+        setTimeout(() => {
+            if (messageDiv.parentNode) {
+                messageDiv.remove();
+            }
+        }, 300);
+    }, 4000);
 }
 
-// التحقق من صحة الإيميل
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// تسجيل الدخول (يطلب الاسم + الإيميل + كلمة المرور)
+// ========== FIX: Update loginUser to use showToast properly ==========
+// أعد تعريف دالة loginUser (استبدليها)
 function loginUser(event) {
     event.preventDefault();
     const name = document.getElementById('loginName').value.trim();
@@ -519,7 +523,7 @@ function loginUser(event) {
     
     // التحقق من صحة الإيميل
     if (!isValidEmail(email)) {
-        showNewsletterMessage('❌ Please enter a valid email address (e.g., name@example.com)', 'error');
+        showToast('❌ Please enter a valid email address (e.g., name@example.com)');
         return;
     }
     
@@ -529,7 +533,7 @@ function loginUser(event) {
     
     if (user) {
         localStorage.setItem('currentUser', JSON.stringify(user));
-        showToast(`Welcome back, ${user.name}! ✨`);
+        showToast(`✨ Welcome back, ${user.name}!`);
         closeLoginModal();
         updateAuthButtons(user.name);
         // تفريغ الحقول
@@ -537,11 +541,11 @@ function loginUser(event) {
         document.getElementById('loginEmail').value = '';
         document.getElementById('loginPassword').value = '';
     } else {
-        showNewsletterMessage('❌ Invalid name, email, or password', 'error');
+        showToast('❌ Invalid name, email, or password');
     }
 }
 
-// إنشاء حساب جديد
+// أعد تعريف دالة signupUser
 function signupUser(event) {
     event.preventDefault();
     const name = document.getElementById('signupName').value.trim();
@@ -550,7 +554,7 @@ function signupUser(event) {
     
     // التحقق من صحة الإيميل
     if (!isValidEmail(email)) {
-        showNewsletterMessage('❌ Please enter a valid email address (e.g., name@example.com)', 'error');
+        showToast('❌ Please enter a valid email address (e.g., name@example.com)');
         return;
     }
     
@@ -558,13 +562,13 @@ function signupUser(event) {
     
     // التحقق إذا الإيميل موجود
     if (users.find(u => u.email === email)) {
-        showNewsletterMessage('❌ Email already registered!', 'error');
+        showToast('❌ Email already registered!');
         return;
     }
     
     // التحقق إذا الاسم موجود
     if (users.find(u => u.name === name)) {
-        showNewsletterMessage('❌ Username already taken!', 'error');
+        showToast('❌ Username already taken!');
         return;
     }
     
@@ -584,16 +588,17 @@ function signupUser(event) {
     document.getElementById('signupPassword').value = '';
 }
 
-// تحديث أزرار Log In/Sign Up بعد التسجيل
+// أعد تعريف دالة updateAuthButtons
 function updateAuthButtons(userName) {
     const loginBtn = document.querySelector('.auth-link.login');
     const signupBtn = document.querySelector('.auth-link.signup');
     
-    if (loginBtn && signupBtn) {
+    if (loginBtn) {
         loginBtn.innerHTML = `👤 ${userName}`;
-        loginBtn.href = "#";
         loginBtn.onclick = () => showToast(`✅ Logged in as ${userName}`);
-        
+    }
+    
+    if (signupBtn) {
         signupBtn.innerHTML = "Logout";
         signupBtn.classList.remove('signup');
         signupBtn.classList.add('login');
@@ -601,7 +606,7 @@ function updateAuthButtons(userName) {
     }
 }
 
-// تسجيل الخروج
+// تأكدي إن دالة logout موجودة
 function logout() {
     localStorage.removeItem('currentUser');
     showToast('👋 You have been logged out');
@@ -610,26 +615,5 @@ function logout() {
     }, 500);
 }
 
-// التحقق من وجود مستخدم مسجل عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', function() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (currentUser && currentUser.name) {
-        updateAuthButtons(currentUser.name);
-    }
-});
-
-// Toast message function (إذا مش موجودة)
-function showToast(message) {
-    let toast = document.querySelector('.toast-notification');
-    if (toast) toast.remove();
-    
-    toast = document.createElement('div');
-    toast.className = 'toast-notification';
-    toast.innerHTML = message;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
+// Test in console
+console.log("✅ All login/signup functions loaded!");
