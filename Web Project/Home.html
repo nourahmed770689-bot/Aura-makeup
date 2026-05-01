@@ -27,10 +27,6 @@
     <a href="Contact.html">Contact</a>
     <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
 
-    <!-- Log In & Sign Up -->
-<a href="#" class="auth-link login" onclick="openLoginModal()">Log In</a>
-<a href="#" class="auth-link signup" onclick="openSignupModal()">Sign Up</a>
-
     <div class="search-icon" onclick="openSearchPopup()">
         <i class="fas fa-search"></i>
     </div>
@@ -244,33 +240,5 @@ function toggleFaceSubcategories() {
         <p class="copyright-text">© 2026 AURA Cosmetics. All rights reserved.</p>
     </div>
 </footer>
-<!-- ========== LOGIN MODAL ========== -->
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeLoginModal()">&times;</span>
-        <h2>Log In to AURA</h2>
-        <form onsubmit="loginUser(event); return false;">
-            <input type="text" id="loginName" placeholder="Full name" required>
-            <input type="email" id="loginEmail" placeholder="Email address" required>
-            <input type="password" id="loginPassword" placeholder="Password" required>
-            <button type="submit">Log In</button>
-        </form>
-        <p class="modal-footer">Don't have an account? <a href="#" onclick="closeLoginModal(); openSignupModal()">Sign Up</a></p>
-    </div>
-</div>
-<!-- ========== SIGNUP MODAL ========== -->
-<div id="signupModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeSignupModal()">&times;</span>
-        <h2>Create Account</h2>
-        <form onsubmit="signupUser(event); return false;">
-            <input type="text" id="signupName" placeholder="Full name" required>
-            <input type="email" id="signupEmail" placeholder="Email address" required>
-            <input type="password" id="signupPassword" placeholder="Password" required>
-            <button type="submit">Sign Up</button>
-        </form>
-        <p class="modal-footer">Already have an account? <a href="#" onclick="closeSignupModal(); openLoginModal()">Log In</a></p>
-    </div>
-</div>
 </body>
 </html>
