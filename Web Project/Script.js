@@ -475,3 +475,161 @@ function scrollToOffers() {
         offersSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
+// ========== LOGIN & SIGNUP MODALS ==========
+function openLoginModal() {
+    document.getElementById('loginModal').classList.add('show');
+}
+
+function closeLoginModal() {
+    document.getElementById('loginModal').classList.remove('show');
+}
+
+function openSignupModal() {
+    document.getElementById('signupModal').classList.add('show');
+}
+
+function closeSignupModal() {
+    document.getElementById('signupModal').classList.remove('show');
+}
+
+// إغلاق المودال إذا ضغط المستخدم خارجها
+window.onclick = function(event) {
+    const loginModal = document.getElementById('loginModal');
+    const signupModal = document.getElementById('signupModal');
+    if (event.target === loginModal) {
+        closeLoginModal();
+    }
+    if (event.target === signupModal) {
+        closeSignupModal();
+    }
+}
+
+// التحقق من صحة الإيميل
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// تسجيل الدخول (يطلب الاسم + الإيميل + كلمة المرور)
+function loginUser(event) {
+    event.preventDefault();
+    const name = document.getElementById('loginName').value.trim();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    
+    // التحقق من صحة الإيميل
+    if (!isValidEmail(email)) {
+        showNewsletterMessage('❌ Please enter a valid email address (e.g., name@example.com)', 'error');
+        return;
+    }
+    
+    // التحقق من وجود المستخدم
+    const users = JSON.parse(localStorage.getItem('auraUsers')) || [];
+    const user = users.find(u => u.name === name && u.email === email && u.password === password);
+    
+    if (user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        showToast(`Welcome back, ${user.name}! ✨`);
+        closeLoginModal();
+        updateAuthButtons(user.name);
+        // تفريغ الحقول
+        document.getElementById('loginName').value = '';
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+    } else {
+        showNewsletterMessage('❌ Invalid name, email, or password', 'error');
+    }
+}
+
+// إنشاء حساب جديد
+function signupUser(event) {
+    event.preventDefault();
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    
+    // التحقق من صحة الإيميل
+    if (!isValidEmail(email)) {
+        showNewsletterMessage('❌ Please enter a valid email address (e.g., name@example.com)', 'error');
+        return;
+    }
+    
+    let users = JSON.parse(localStorage.getItem('auraUsers')) || [];
+    
+    // التحقق إذا الإيميل موجود
+    if (users.find(u => u.email === email)) {
+        showNewsletterMessage('❌ Email already registered!', 'error');
+        return;
+    }
+    
+    // التحقق إذا الاسم موجود
+    if (users.find(u => u.name === name)) {
+        showNewsletterMessage('❌ Username already taken!', 'error');
+        return;
+    }
+    
+    // إضافة المستخدم الجديد
+    const newUser = { name, email, password };
+    users.push(newUser);
+    localStorage.setItem('auraUsers', JSON.stringify(users));
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    
+    showToast(`🎉 Welcome to AURA, ${name}!`);
+    closeSignupModal();
+    updateAuthButtons(name);
+    
+    // تفريغ الحقول
+    document.getElementById('signupName').value = '';
+    document.getElementById('signupEmail').value = '';
+    document.getElementById('signupPassword').value = '';
+}
+
+// تحديث أزرار Log In/Sign Up بعد التسجيل
+function updateAuthButtons(userName) {
+    const loginBtn = document.querySelector('.auth-link.login');
+    const signupBtn = document.querySelector('.auth-link.signup');
+    
+    if (loginBtn && signupBtn) {
+        loginBtn.innerHTML = `👤 ${userName}`;
+        loginBtn.href = "#";
+        loginBtn.onclick = () => showToast(`✅ Logged in as ${userName}`);
+        
+        signupBtn.innerHTML = "Logout";
+        signupBtn.classList.remove('signup');
+        signupBtn.classList.add('login');
+        signupBtn.onclick = () => logout();
+    }
+}
+
+// تسجيل الخروج
+function logout() {
+    localStorage.removeItem('currentUser');
+    showToast('👋 You have been logged out');
+    setTimeout(() => {
+        location.reload();
+    }, 500);
+}
+
+// التحقق من وجود مستخدم مسجل عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser && currentUser.name) {
+        updateAuthButtons(currentUser.name);
+    }
+});
+
+// Toast message function (إذا مش موجودة)
+function showToast(message) {
+    let toast = document.querySelector('.toast-notification');
+    if (toast) toast.remove();
+    
+    toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.innerHTML = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}

@@ -1388,3 +1388,149 @@ button:hover {
         max-width: 250px;
     }
 }
+/* Log In & Sign Up buttons */
+.auth-link {
+    color: #FFC4C4;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 25px;
+    transition: all 0.3s;
+    margin-left: 5px;
+}
+
+/* Log In - عادي بدون مربع */
+.auth-link.login {
+    background: transparent;
+}
+
+.auth-link.login:hover {
+    color: #EE6983;
+    background: transparent;
+}
+
+/* Sign Up - في مربع */
+.auth-link.signup {
+    background: #EE6983;
+    color: white;
+    border: 1px solid #EE6983;
+}
+
+.auth-link.signup:hover {
+    background: #FFC4C4;
+    color: #561C24;
+    transform: translateY(-2px);
+}
+/* ========== MODAL STYLES ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-modal:hover {
+    color: #EE6983;
+}
+
+.modal-content h2 {
+    color: #561C24;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.modal-content button {
+    width: 100%;
+    background: #561C24;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background: #EE6983;
+}
+
+.modal-footer {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.modal-footer a {
+    color: #EE6983;
+    text-decoration: none;
+}
+/* Toast Notification */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    z-index: 9999;
+    animation: slideInRight 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    transition: opacity 0.3s;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
