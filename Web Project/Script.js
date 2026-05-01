@@ -475,3 +475,122 @@ function scrollToOffers() {
         offersSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
+// Display order summary on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadCartFromLocalStorage();
+    displayOrderSummary();
+});
+
+function displayOrderSummary() {
+    let summaryDiv = document.getElementById('orderSummary');
+    
+    cart.forEach((item) => {
+        let itemDiv = document.createElement('div');
+        itemDiv.className = 'order-item';
+        itemDiv.innerHTML = `
+            <span>${item.name} x ${item.quantity}</span>
+            <span>${(item.price * item.quantity)} EGP</span>
+        `;
+        summaryDiv.appendChild(itemDiv);
+    });
+
+    let totalDiv = document.createElement('div');
+    totalDiv.className = 'order-total';
+    totalDiv.innerHTML = `
+        <span>Total:</span>
+        <span>${getCartTotal()} EGP</span>
+    `;
+    summaryDiv.appendChild(totalDiv);
+}
+
+function validateCheckoutForm() {
+    let firstName = document.getElementById('firstName').value.trim();
+    let lastName = document.getElementById('lastName').value.trim();
+    let email = document.getElementById('email').value.trim();
+    let phone = document.getElementById('phone').value.trim();
+    let address = document.getElementById('address').value.trim();
+    let city = document.getElementById('city').value.trim();
+    let zipCode = document.getElementById('zipCode').value.trim();
+
+    if (!firstName || !lastName || !email || !phone || !address || !city || !zipCode) {
+        showError('Please fill in all required fields');
+        return false;
+    }
+
+    return true;
+}
+
+function showError(message) {
+    let errorDiv = document.getElementById('errorMessage');
+    errorDiv.innerText = message;
+    errorDiv.style.display = 'block';
+    setTimeout(() => {
+        errorDiv.style.display = 'none';
+    }, 4000);
+}
+function submitOrder() {
+    let formData = new FormData(document.getElementById('checkoutForm'));
+
+    fetch('DB_order.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.text())
+    .then(data => {
+
+        if (data.trim() === "success") {
+
+            // اخفي الفورم أو رسالة Done
+            document.getElementById('checkoutForm').style.display = "none";
+
+            // اظهر الـ summary
+            document.getElementById('orderSummary').style.display = "block";
+
+            // اعرض البيانات
+            displayOrderSummary();
+
+        } else {
+            showError("Error while placing order");
+        }
+
+    });
+}
+function submitContact() {
+
+    let form = document.getElementById('contactForm');
+    let formData = new FormData(form);
+
+    let name = formData.get("Name");
+    let email = formData.get("Email");
+
+    fetch('DB_contact.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.text())
+    .then(data => {
+
+        if (data.toLowerCase().includes("success")) {
+
+            document.getElementById('formContainer').style.display = "none";
+            document.querySelector('.contact-info').style.display = "none";
+            document.querySelector('.page-title').style.display = "none";
+
+            document.getElementById('successContainer').style.display = "block";
+
+            document.getElementById('successName').innerText =
+                "Thank you " + name + "!";
+
+            document.getElementById('successEmail').innerText =
+                "We will contact you at " + email;
+
+        } else {
+            alert("❌ " + data);
+        }
+
+    })
+    .catch(err => {
+        console.log(err);
+        alert("Server error ❌");
+    });
+}

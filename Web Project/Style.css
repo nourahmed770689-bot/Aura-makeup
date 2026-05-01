@@ -586,6 +586,25 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* Description - lighter yellow */
+.card .description {
+    color: #703B3B;
+    font-size: 12px;
+    margin: 3px 8px;
+}
+
+/* Button alignment in card */
+.card button {
+    width: 80%;
+    max-width: 160px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 /* Image */
 .card img {
     width: 100%;
@@ -748,7 +767,7 @@ button:hover {
 /* Contact page */
 .page-title {
     text-align: center;
-    margin-top: 140px;
+    margin-top: 30px; 
     margin-bottom: 30px;
     font-size: 42px;
     color: #333;
@@ -779,6 +798,7 @@ button:hover {
     padding: 8px 16px;
     border-radius: 999px;
     font-weight: 700;
+    width: fit-content;
 }
 
 .contact-info h3,
@@ -1368,4 +1388,144 @@ button:hover {
         width: 100%;
         max-width: 250px;
     }
+}
+/* Log In & Sign Up buttons */
+.auth-link {
+    color: #FFC4C4;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 25px;
+    transition: all 0.3s;
+    margin-left: 5px;
+}
+.auth-link.login { background: transparent; }
+.auth-link.login:hover { color: #EE6983; }
+.auth-link.signup { background: #EE6983; color: white; border: 1px solid #EE6983; }
+.auth-link.signup:hover { background: #FFC4C4; color: #561C24; }
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+.modal.show { display: flex; }
+.modal-content {
+    background: white;
+    padding: 35px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 420px;
+    position: relative;
+    animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+.close-modal {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+}
+.close-modal:hover { color: #EE6983; }
+.modal-content h2 {
+    color: #561C24;
+    font-size: 28px;
+    margin-bottom: 8px;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+}
+.modal-subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+.input-group { margin-bottom: 20px; }
+.input-group label {
+    display: block;
+    color: #561C24;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.input-group input:focus {
+    outline: none;
+    border-color: #EE6983;
+}
+.input-group input::placeholder { color: #bbb; }
+.password-hint {
+    display: block;
+    font-size: 11px;
+    color: #999;
+    margin-top: 5px;
+}
+.login-btn, .signup-btn {
+    width: 100%;
+    background: #561C24;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.login-btn:hover, .signup-btn:hover { background: #EE6983; }
+.modal-footer {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+}
+.modal-footer a {
+    color: #EE6983;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Toast */
+.toast-message {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 14px;
+    z-index: 10001;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    white-space: nowrap;
+}
+.toast-message.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+.toast-message.success { background: #4CAF50; color: white; }
+.toast-message.error { background: #f44336; color: white; }
+.toast-message.info { background: #EE6983; color: white; }
+@media (max-width: 768px) {
+    .toast-message { white-space: normal; text-align: center; max-width: 85%; font-size: 12px; }
 }

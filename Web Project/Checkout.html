@@ -134,6 +134,29 @@
             border: 1px solid #c3e6cb;
         }
 
+        .order-summary {
+            background: #f7e6e0;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .home-btn {
+            display: none;
+            background: #703B3B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 28px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .home-btn:hover {
+            background: #5a2f2f;
+        }
+
         .error-message {
             background: #f8d7da;
             color: #721c24;
@@ -163,8 +186,18 @@
 
 <div class="navbar">
     <a href="Home.html">Home</a>
-    <a href="Products.html">Products</a>
+   <div class="dropdown">
+        <button onclick="toggleDropdown()" class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+        <div id="dropdown-content" class="dropdown-content">
+            <a href="Products.html">All Products</a>
+            <a href="Products.html?category=face">Face</a>
+            <a href="Products.html?category=eyes">Eyes</a>
+            <a href="Products.html?category=lips">Lips</a>
+            <a href="Products.html?category=blusher">Blusher</a>
+        </div>
+    </div>
     <a href="Tips.html">Tips</a>
+    <span class="logo">AURA</span>
     <a href="Gallery.html">Gallery</a>
     <a href="Contact.html">Contact</a>
     <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
@@ -186,17 +219,17 @@
 <div class="checkout-container">
     <h1>Checkout 💳</h1>
 
-    <div class="confirmation-message" id="confirmationMessage">
-        <h3>✅ Order Placed Successfully!</h3>
-        <p id="orderDetails"></p>
-    </div>
-
     <div class="order-summary">
+        <div class="confirmation-message" id="confirmationMessage">
+            <h3>✅ Order Placed Successfully!</h3>
+            <p id="orderDetails"></p>
+        </div>
         <h3>Order Summary</h3>
         <div id="orderSummary"></div>
+        <button type="button" id="homeButton" class="back-btn home-btn" onclick="window.location.href='Home.html'">Back to Home</button>
     </div>
-
-    <form class="checkout-form" id="checkoutForm" action="DB_order.php" method="POST" onsubmit="return validateCheckoutForm()">
+   
+    <form class="checkout-form" id="checkoutForm" action="DB_order.php" method="POST" onsubmit="event.preventDefault(); submitOrder();">
         <div class="error-message" id="errorMessage"></div>
 
         <h3 style="color: #703B3B; margin-top: 0;">Customer Information</h3>
@@ -252,6 +285,7 @@
     </form>
 </div>
 
+
 <script src="Script.js"></script>
 <script>
 // Display order summary on page load
@@ -262,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function displayOrderSummary() {
     let summaryDiv = document.getElementById('orderSummary');
+    summaryDiv.innerHTML = '';
     
     cart.forEach((item) => {
         let itemDiv = document.createElement('div');
@@ -306,6 +341,35 @@ function showError(message) {
     setTimeout(() => {
         errorDiv.style.display = 'none';
     }, 4000);
+}
+function submitOrder() {
+    let formData = new FormData(document.getElementById('checkoutForm'));
+
+    fetch('DB_order.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.text())
+    .then(data => {
+
+        if (data.trim() === "success") {
+
+            document.getElementById('checkoutForm').style.display = "none";
+            document.getElementById('confirmationMessage').style.display = "block";
+            document.getElementById('homeButton').style.display = "inline-block";
+            document.getElementById('orderSummary').style.display = "block";
+            displayOrderSummary();
+
+            // Clear cart after successful order
+            cart = [];
+            localStorage.removeItem('auraCart');
+            updateCartCount();
+
+        } else {
+            showError("Error while placing order");
+        }
+
+    });
 }
 </script>
 </body>

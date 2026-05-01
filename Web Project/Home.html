@@ -187,6 +187,34 @@ function toggleFaceSubcategories() {
         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
+
+function subscribeNewsletter(event) {
+    event.preventDefault();
+    
+    // جيبنا الإيميل من الـ input
+    const email = document.getElementById('newsletterEmail').value;
+    
+    // إعداد البيانات
+    const formData = new FormData();
+    formData.append('Email', email);
+    // (شيلنا السطر ده عشان الـ form هو اللي بيبعت الوقت)
+    
+    // إرسال البيانات للـ PHP
+    fetch('DB_subscriber.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+.then(data => {
+    // لو البيانات فيها كلمة success، يعني نجاح
+    if (data.includes('success')) {
+        alert('Subscribed successfully! ✅');
+        document.getElementById('newsletterEmail').value = '';
+    } else {
+        alert('Error: ' + data);
+    }
+})
+}
 </script>
 
 <!-- ========== FOOTER ========== -->
@@ -222,8 +250,9 @@ function toggleFaceSubcategories() {
                 By entering your email address you will receive promotional updates.<br>
                 Consent is not a condition of purchase.
             </p>
-            <form class="newsletter-form" onsubmit="subscribeNewsletter(event); return false;">
-                <input type="email" id="newsletterEmail" placeholder="Your email address" required>
+            <form  class="newsletter-form" onsubmit="subscribeNewsletter(event); return false;">
+                <input id="newsletterEmail" type="email" name="Email" placeholder="Your email address" required>
+                <input type="hidden" name="Created_At" value="<?php echo date('Y-m-d H:i:s'); ?>">
                 <button type="submit">Subscribe</button>
             </form>
             <a href="#" class="privacy-link">View Privacy Policy</a>

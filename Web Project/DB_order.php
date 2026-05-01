@@ -13,10 +13,9 @@ $Notes = $_POST['Notes'];
 
 $sql = "INSERT INTO orders (First_Name, Last_Name, Email, Phone, Address, City, Zip_Code, Notes) VALUES ('$First','$Last','$Email','$Phone','$Address','$City','$Zip','$Notes')";
 if ($conn->query($sql) === TRUE) {
-    echo "Done!";
+    echo "success";
 } else {
-    echo "Error: " . $conn->error;
+    echo "error";
 }
 
-echo "Order placed successfully!";
 ?>
