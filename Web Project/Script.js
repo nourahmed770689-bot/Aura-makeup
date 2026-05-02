@@ -594,3 +594,130 @@ function submitContact() {
         alert("Server error ❌");
     });
 }
+// ========== PROFILE SYSTEM ==========
+function isLoggedIn() {
+    return localStorage.getItem('currentUser') !== null;
+}
+function openProfile() {
+    if (localStorage.getItem('currentUser')) {
+        window.location.href = 'Profile.html';
+    } else {
+        const modal = document.getElementById('profileModal');
+        if (modal) modal.classList.add('show');
+    }
+}
+
+function closeProfileModal() {
+    document.getElementById('profileModal').classList.remove('show');
+}
+
+function showLoginForm() {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('signupForm').style.display = 'none';
+}
+
+function showSignupForm() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('signupForm').style.display = 'block';
+}
+
+function loginUser(event) {
+    event.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    
+    const users = JSON.parse(localStorage.getItem('auraUsers')) || [];
+    const user = users.find(u => u.email === email && u.password === password);
+    
+    if (user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        showToast(`✨ Welcome back, ${user.name}!`, 'success');
+        closeProfileModal();
+        setTimeout(() => { window.location.href = 'Profile.html'; }, 500);
+    } else {
+        showToast('❌ Invalid email or password', 'error');
+    }
+}
+
+function signupUser(event) {
+    event.preventDefault();
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    
+    if (name.length < 2) {
+        showToast('❌ Please enter your full name', 'error');
+        return;
+    }
+    if (!isValidEmail(email)) {
+        showToast('❌ Please enter a valid email address', 'error');
+        return;
+    }
+    if (password.length < 6) {
+        showToast('❌ Password must be at least 6 characters', 'error');
+        return;
+    }
+    
+    let users = JSON.parse(localStorage.getItem('auraUsers')) || [];
+    if (users.find(u => u.email === email)) {
+        showToast('❌ Email already registered!', 'error');
+        return;
+    }
+    
+    const newUser = { name, email, password, profileImage: null, joinDate: new Date().toISOString() };
+    users.push(newUser);
+    localStorage.setItem('auraUsers', JSON.stringify(users));
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    
+    showToast(`🎉 Welcome to AURA, ${name}!`, 'success');
+    closeProfileModal();
+    setTimeout(() => { window.location.href = 'Profile.html'; }, 500);
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('profileModal');
+    if (event.target === modal) closeProfileModal();
+};
+
+function showToast(message, type) {
+    let toast = document.querySelector('.toast-message');
+    if (toast) toast.remove();
+    toast = document.createElement('div');
+    toast.className = `toast-message ${type}`;
+    toast.innerHTML = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+// تأكدي إن الأيقونة تشتغل
+document.addEventListener('DOMContentLoaded', function() {
+    const profileIcon = document.querySelector('.profile-icon');
+    if (profileIcon) {
+        profileIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            openProfile();
+        });
+    }
+    console.log('Profile icon ready');
+});
+// ========== LOGOUT FUNCTION ==========
+function logout() {
+    // حذف المستخدم الحالي من localStorage
+    localStorage.removeItem('currentUser');
+    
+    // رسالة تأكيد
+    showToast('👋 You have been logged out successfully!', 'info');
+    
+    // الانتقال للصفحة الرئيسية بعد 1 ثانية
+    setTimeout(function() {
+        window.location.href = 'Home.html';
+    }, 1000);
+}

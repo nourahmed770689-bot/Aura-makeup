@@ -9,26 +9,34 @@
 </head>
 
 <body>
-
+    <!-- Navbar -->
 <div class="navbar">
-    <a href="Home.html">Home</a>
-    <div class="dropdown">
-        <button class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
-        <div id="dropdown-content" class="dropdown-content">
-            <a href="Products.html">All Products</a>
-            <a href="Products.html?category=face">Face</a>
-            <a href="Products.html?category=eyes">Eyes</a>
-            <a href="Products.html?category=lips">Lips</a>
-            <a href="Products.html?category=blusher">Blusher</a>
+    <div class="nav-left">
+        <a href="Home.html">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <a href="Products.html">All Products</a>
+                <a href="Products.html?category=face">Face</a>
+                <a href="Products.html?category=eyes">Eyes</a>
+                <a href="Products.html?category=lips">Lips</a>
+                <a href="Products.html?category=blusher">Blusher</a>
+            </div>
         </div>
+        <a href="About us.html">About Us</a>
+        <a href="Contact.html">Contact</a>
     </div>
+    
     <span class="logo">AURA</span>
-    <a href="About us.html">About Us</a>
-    <a href="Contact.html">Contact</a>
-    <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
-
-    <div class="search-icon" onclick="openSearchPopup()">
-        <i class="fas fa-search"></i>
+    
+    <div class="nav-right">
+        <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+        <div class="search-icon" onclick="openSearchPopup()">
+            <i class="fas fa-search"></i>
+        </div>
+        <a href="#" class="profile-icon" onclick="openProfile()">
+            <i class="fas fa-user-circle"></i>
+        </a>
     </div>
 </div>
 
@@ -41,6 +49,53 @@
         </form>
     </div>
     <button class="close-search" onclick="closeSearchPopup()">✕</button>
+</div>
+<!-- Profile Modal (Log In / Sign Up) -->
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeProfileModal()">&times;</span>
+        
+        <!-- Log In Form -->
+        <div id="loginForm">
+            <h2>Welcome Back</h2>
+            <p class="modal-subtitle">Log in to your AURA account</p>
+            <form onsubmit="loginUser(event); return false;">
+                <div class="input-group">
+                    <label>Email address</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="login-btn">Log In</button>
+            </form>
+            <p class="modal-footer">Don't have an account? <a onclick="showSignupForm()">Create one</a></p>
+        </div>
+        
+        <!-- Sign Up Form -->
+        <div id="signupForm" style="display: none;">
+            <h2>Create Account</h2>
+            <p class="modal-subtitle">Join AURA family</p>
+            <form onsubmit="signupUser(event); return false;">
+                <div class="input-group">
+                    <label>Full name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" required>
+                </div>
+                <div class="input-group">
+                    <label>Email address</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password" required>
+                    <span class="password-hint">Min. 6 characters</span>
+                </div>
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+            <p class="modal-footer">Already have an account? <a onclick="showLoginForm()">Log In</a></p>
+        </div>
+    </div>
 </div>
 
 <div class="shipping-banner" onclick="window.location.href='Products.html?price=over200'">
@@ -148,7 +203,7 @@
         </div>
 
         <div class="card" onclick="window.location.href='Products.html?category=face&type=powder'">
-            <img src="loosepowder.jpg">
+            <img src="powder.jpg">
             <h3>Powder</h3>
         </div>
 
