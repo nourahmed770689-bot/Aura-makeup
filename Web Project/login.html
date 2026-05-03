@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login - AURA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+       
+
+
+        /* Login Container */
+        .login-container {
+            max-width: 500px;
+            margin: 120px auto 60px;
+            padding: 0 20px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-header .logo {
+            font-size: 48px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .login-header h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* نفس الـ input groups من البروفايل */
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-group label i {
+            margin-right: 8px;
+            color: #c084fc;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #c084fc;
+            box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.1);
+        }
+
+        /* نفس الـ buttons من البروفايل */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #c084fc, #db2777);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(192, 132, 252, 0.3);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .signup-link a {
+            color: #db2777;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: #e74c3c;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+      
+    </style>
+</head>
+<body>
+
+<!-- نفس النافبار -->
+<div class="navbar">
+    <a href="Home.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+        <div class="dropdown-content">
+            <a href="Products.html">All Products</a>
+            <a href="Products.html?category=face">Face</a>
+            <a href="Products.html?category=eyes">Eyes</a>
+            <a href="Products.html?category=lips">Lips</a>
+            <a href="Products.html?category=blusher">Blusher</a>
+        </div>
+    </div>
+    <a href="About us.html">About Us</a>
+    <span class="logo">AURA</span>
+    <a href="Contact.html">Contact</a>
+    <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+    <div class="search-icon" onclick="openSearchPopup()">
+        <i class="fas fa-search"></i>
+    </div>
+    <a href="#" class="profile-icon" onclick="openProfile()">
+        <i class="fas fa-user-circle"></i>
+    </a>
+</div>
+
+<!-- Login Content -->
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="logo">AURA</div>
+            <h2>Welcome Back!</h2>
+            <p>Sign in to continue your beauty journey</p>
+        </div>
+        
+        <form onsubmit="loginUser(event)">
+            <div class="input-group">
+                <label><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="Email" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="Password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Sign In</button>
+        </form>
+        
+        <div class="signup-link">
+            Don't have an account? <a href="Signup.html">Create Account</a>
+        </div>
+        
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-image-col">
+            <img src="footer-image.jpg" alt="AURA Makeup" class="footer-image">
+        </div>
+        <div class="footer-links-col">
+            <h4>HELP</h4>
+            <ul><li><a href="Contact.html">Contact Us</a></li></ul>
+        </div>
+        <div class="footer-links-col">
+            <h4>ABOUT</h4>
+            <ul>
+                <li><a href="About us.html">About Us</a></li>
+                <li><a href="#" onclick="scrollToOffers(); return false;">Offers & Sales</a></li>
+            </ul>
+        </div>
+        <div class="footer-newsletter-col">
+            <h4>hey beautiful, let's keep in touch!</h4>
+            <p class="newsletter-text">By entering your email address you will receive promotional updates.<br>Consent is not a condition of purchase.</p>
+            <form class="newsletter-form" onsubmit="subscribeNewsletter(event); return false;">
+                <input id="newsletterEmail" type="email" name="Email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="copyright-text">© 2026 AURA Cosmetics. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+function loginUser(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('Email').value;
+    const password = document.getElementById('Password').value;
+    
+    const formData = new FormData();
+    formData.append("Email", email);
+    formData.append("Password", password);
+    
+    console.log("Sending login request...");
+    
+    fetch("DB_login.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Login response:", data);
+        const errorDiv = document.getElementById('errorMessage');
+        
+        if (data.status === "success") {
+            console.log("Login successful, redirecting to profile...");
+            errorDiv.classList.remove('show');
+            // تأخير صغير قبل التحويل
+            setTimeout(() => {
+                window.location.href = "Profile.html";
+            }, 100);
+        } else if (data.status === "wrong_password") {
+            errorDiv.textContent = "❌ Incorrect password. Please try again.";
+            errorDiv.classList.add('show');
+        } else if (data.status === "user_not_found") {
+            errorDiv.textContent = "❌ Email not found. Please create an account.";
+            errorDiv.classList.add('show');
+        } else {
+            errorDiv.textContent = "❌ Error: " + JSON.stringify(data);
+            errorDiv.classList.add('show');
+        }
+    })
+    .catch(error => {
+        console.error("Fetch error:", error);
+        const errorDiv = document.getElementById('errorMessage');
+        errorDiv.textContent = "❌ Network error: " + error.message;
+        errorDiv.classList.add('show');
+    });
+}
+
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCount = document.getElementById('cartCount');
+    if (cartCount) {
+        cartCount.innerText = cart.length;
+    }
+}
+
+function openProfile() {
+    window.location.href = 'Profile.html';
+}
+
+function openSearchPopup() {
+    // Implement search popup if needed
+}
+
+function subscribeNewsletter(event) {
+    event.preventDefault();
+    const email = document.getElementById('newsletterEmail').value;
+    alert(`Thank you for subscribing with: ${email}`);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartCount();
+});
+</script>
+
+</body>
+</html>

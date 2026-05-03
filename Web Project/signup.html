@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up - AURA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+       
+
+        .signup-container {
+            max-width: 500px;
+            margin: 120px auto 60px;
+            padding: 0 20px;
+        }
+
+        .signup-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .signup-header .logo {
+            font-size: 48px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .signup-header h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .signup-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-group label i {
+            margin-right: 8px;
+            color: #c084fc;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #c084fc;
+            box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.1);
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #c084fc, #db2777);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(192, 132, 252, 0.3);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .login-link a {
+            color: #db2777;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: #e74c3c;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="Home.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+        <div class="dropdown-content">
+            <a href="Products.html">All Products</a>
+            <a href="Products.html?category=face">Face</a>
+            <a href="Products.html?category=eyes">Eyes</a>
+            <a href="Products.html?category=lips">Lips</a>
+            <a href="Products.html?category=blusher">Blusher</a>
+        </div>
+    </div>
+    <a href="About us.html">About Us</a>
+    <span class="logo">AURA</span>
+    <a href="Contact.html">Contact</a>
+    <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+    <div class="search-icon" onclick="openSearchPopup()">
+        <i class="fas fa-search"></i>
+    </div>
+    <a href="#" class="profile-icon" onclick="openProfile()">
+        <i class="fas fa-user-circle"></i>
+    </a>
+</div>
+
+<div class="signup-container">
+    <div class="signup-card">
+        <div class="signup-header">
+            <div class="logo">AURA</div>
+            <h2>Create Account</h2>
+            <p>Join us and discover your beauty</p>
+        </div>
+        
+        <form onsubmit="signupUser(event)">
+            <div class="input-group">
+                <label><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" id="Name" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="input-group">
+                <label><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="Email" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="Password" placeholder="Create a password" required>
+            </div>
+            
+            <button type="submit" class="signup-btn">Create Account</button>
+        </form>
+        
+        <div class="login-link">
+            Already have an account? <a href="Login.html">Sign In</a>
+        </div>
+        
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-image-col">
+            <img src="footer-image.jpg" alt="AURA Makeup" class="footer-image">
+        </div>
+        <div class="footer-links-col">
+            <h4>HELP</h4>
+            <ul><li><a href="Contact.html">Contact Us</a></li></ul>
+        </div>
+        <div class="footer-links-col">
+            <h4>ABOUT</h4>
+            <ul>
+                <li><a href="About us.html">About Us</a></li>
+                <li><a href="#" onclick="scrollToOffers(); return false;">Offers & Sales</a></li>
+            </ul>
+        </div>
+        <div class="footer-newsletter-col">
+            <h4>hey beautiful, let's keep in touch!</h4>
+            <p class="newsletter-text">By entering your email address you will receive promotional updates.<br>Consent is not a condition of purchase.</p>
+            <form class="newsletter-form" onsubmit="subscribeNewsletter(event); return false;">
+                <input id="newsletterEmail" type="email" name="Email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="copyright-text">© 2026 AURA Cosmetics. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+function signupUser(event) {
+    event.preventDefault();
+    
+    const formData = new FormData();
+    formData.append("Name", document.getElementById('Name').value);
+    formData.append("Email", document.getElementById('Email').value);
+    formData.append("Password", document.getElementById('Password').value);
+    
+    fetch("DB_signup.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.text())
+    .then(data => {
+        const errorDiv = document.getElementById('errorMessage');
+        
+        if (data.trim() === "success") {
+            errorDiv.classList.remove('show');
+            alert("✨ Account created successfully! Please login.");
+            window.location.href = "Login.html";
+        } else if (data.includes("EMAIL_EXISTS")) {
+            errorDiv.textContent = "❌ This email is already registered. Please login instead.";
+            errorDiv.classList.add('show');
+        } else {
+            errorDiv.textContent = "❌ An error occurred. Please try again.";
+            errorDiv.classList.add('show');
+        }
+    })
+    .catch(error => {
+        const errorDiv = document.getElementById('errorMessage');
+        errorDiv.textContent = "❌ Network error. Please check your connection.";
+        errorDiv.classList.add('show');
+    });
+}
+
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCount = document.getElementById('cartCount');
+    if (cartCount) {
+        cartCount.innerText = cart.length;
+    }
+}
+
+function openProfile() {
+    window.location.href = 'Profile.html';
+}
+
+function subscribeNewsletter(event) {
+    event.preventDefault();
+    const email = document.getElementById('newsletterEmail').value;
+    alert(`Thank you for subscribing with: ${email}`);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartCount();
+});
+</script>
+
+</body>
+</html>
