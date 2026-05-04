@@ -17,6 +17,12 @@ function updateCartCount() {
     });
 }
 
+function clearCartData() {
+    cart = [];
+    localStorage.removeItem(CART_STORAGE_KEY);
+    updateCartCount();
+}
+
 function getCartTotal() {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
 }

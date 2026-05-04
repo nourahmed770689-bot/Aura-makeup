@@ -166,6 +166,142 @@
             display: none;
         }
 
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #fff;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .payment-option input {
+            accent-color: #703B3B;
+        }
+
+        .payment-option:hover {
+            border-color: #703B3B;
+            box-shadow: 0 5px 18px rgba(112, 59, 59, 0.1);
+        }
+
+        .payment-details {
+            margin-bottom: 20px;
+        }
+
+        .payment-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 2000;
+        }
+
+        .payment-modal {
+            width: min(520px, 100%);
+            background: #fff;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+            text-align: center;
+        }
+
+        .payment-modal h2 {
+            margin-top: 0;
+            color: #703B3B;
+        }
+
+        .payment-modal p {
+            color: #333;
+            margin: 18px 0 28px;
+            line-height: 1.6;
+        }
+
+        .payment-overlay-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .payment-modal .place-order-btn,
+        .payment-modal .back-btn {
+            min-width: 140px;
+        }
+
+        .success-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 20px;
+            z-index: 2100;
+        }
+
+        .success-card {
+            width: min(580px, 100%);
+            background: #fff;
+            border-radius: 18px;
+            padding: 32px 28px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.18);
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 48px;
+            margin-bottom: 18px;
+        }
+
+        .success-card h2 {
+            margin-top: 0;
+            color: #703B3B;
+        }
+
+        .success-card p {
+            color: #444;
+            margin: 14px auto 24px;
+            max-width: 460px;
+            line-height: 1.6;
+        }
+
+        .success-summary {
+            background: #f7e6e0;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .success-summary h3 {
+            margin-top: 0;
+            color: #703B3B;
+        }
+
+        .success-summary p {
+            margin: 10px 0 0;
+            color: #333;
+        }
+
+        @media (max-width: 800px) {
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 600px) {
             .form-row {
                 grid-template-columns: 1fr;
@@ -223,7 +359,7 @@
     <button class="close-search" onclick="closeSearchPopup()">✕</button>
 </div>
 
-<div class="checkout-container">
+<div class="checkout-container" id="checkoutContainer">
     <h1>Checkout 💳</h1>
 
     <div class="order-summary">
@@ -236,7 +372,7 @@
         <button type="button" id="homeButton" class="back-btn home-btn" onclick="window.location.href='Home.html'">Back to Home</button>
     </div>
    
-    <form class="checkout-form" id="checkoutForm" action="DB_order.php" method="POST" onsubmit="event.preventDefault(); submitOrder();">
+    <form class="checkout-form" id="checkoutForm" action="DB_order.php" method="POST" onsubmit="handleCheckout(event);">
         <div class="error-message" id="errorMessage"></div>
 
         <h3 style="color: #703B3B; margin-top: 0;">Customer Information</h3>
@@ -285,6 +421,47 @@
             <textarea id="notes" name="Notes" placeholder="Special requests or delivery instructions..."></textarea>
         </div>
 
+        <h3 style="color: #703B3B; margin-top: 0;">Payment Options</h3>
+        <div class="payment-methods">
+            <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="card" checked onchange="updatePaymentFields()">
+                Credit / Debit Card
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="paypal" onchange="updatePaymentFields()">
+                PayPal
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="cash" onchange="updatePaymentFields()">
+                Cash on Delivery
+            </label>
+        </div>
+
+        <div class="payment-details" id="paymentDetails">
+            <div class="form-group payment-card-field" id="cardFields">
+                <label for="cardName">Cardholder Name *</label>
+                <input type="text" id="cardName" name="Cardholder_Name" placeholder="Name on card">
+            </div>
+            <div class="form-group payment-card-field" id="cardNumberField">
+                <label for="cardNumber">Card Number *</label>
+                <input type="text" id="cardNumber" name="Card_Number" placeholder="1234 5678 9012 3456" maxlength="19">
+            </div>
+            <div class="form-row payment-card-field" id="cardExpiryCvv">
+                <div class="form-group">
+                    <label for="cardExpiry">Expiry *</label>
+                    <input type="text" id="cardExpiry" name="Card_Expiry" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div class="form-group">
+                    <label for="cardCvv">CVV *</label>
+                    <input type="text" id="cardCvv" name="Card_CVV" placeholder="123" maxlength="4">
+                </div>
+            </div>
+            <div class="form-group payment-paypal-field" id="paypalField" style="display:none;">
+                <label for="paypalEmail">PayPal Email *</label>
+                <input type="email" id="paypalEmail" name="PayPal_Email" placeholder="you@example.com">
+            </div>
+        </div>
+
         <div class="checkout-actions">
             <button type="button" class="back-btn" onclick="window.location.href='Cart.html'">Back to Cart</button>
             <button type="submit" class="place-order-btn">Place Order</button>
@@ -292,6 +469,30 @@
     </form>
 </div>
 
+<div class="success-screen" id="successScreen" style="display:none;">
+    <div class="success-card">
+        <div class="success-icon">✅</div>
+        <h2>Thank you for your order!</h2>
+        <p>Your payment was successful and your order is now confirmed.</p>
+        <div class="success-summary">
+            <h3>Order details</h3>
+            <div id="successOrderSummary"></div>
+            <p id="successPaymentInfo"></p>
+        </div>
+        <button type="button" class="place-order-btn" onclick="window.location.href='Home.html'">Continue Shopping</button>
+    </div>
+</div>
+
+<div class="payment-overlay" id="paymentOverlay" style="display:none;">
+    <div class="payment-modal">
+        <h2>Secure Payment</h2>
+        <p id="paymentSummary"></p>
+        <div class="payment-overlay-actions">
+            <button type="button" class="place-order-btn" id="payNowButton" onclick="completeFakePayment()">Pay Now</button>
+            <button type="button" class="back-btn" onclick="closePaymentOverlay()">Cancel</button>
+        </div>
+    </div>
+</div>
 
 <script src="Script.js"></script>
 <script>
@@ -299,6 +500,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadCartFromLocalStorage();
     displayOrderSummary();
+    updatePaymentFields();
 });
 
 function displayOrderSummary() {
@@ -341,6 +543,50 @@ function validateCheckoutForm() {
     return true;
 }
 
+function validatePaymentFields(method) {
+    if (method === 'card') {
+        const cardName = document.getElementById('cardName').value.trim();
+        const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+        const cardExpiry = document.getElementById('cardExpiry').value.trim();
+        const cardCvv = document.getElementById('cardCvv').value.trim();
+
+        if (!cardName || !cardNumber || !cardExpiry || !cardCvv) {
+            showError('Please complete your card details');
+            return false;
+        }
+
+        if (!/^\d{13,19}$/.test(cardNumber)) {
+            showError('Enter a valid card number');
+            return false;
+        }
+
+        if (!/^(0[1-9]|1[0-2])\/(\d{2})$/.test(cardExpiry)) {
+            showError('Enter expiry as MM/YY');
+            return false;
+        }
+
+        if (!/^\d{3,4}$/.test(cardCvv)) {
+            showError('Enter a valid CVV');
+            return false;
+        }
+    }
+
+    if (method === 'paypal') {
+        const paypalEmail = document.getElementById('paypalEmail').value.trim();
+        if (!paypalEmail) {
+            showError('Please enter your PayPal email');
+            return false;
+        }
+
+        if (!/^\S+@\S+\.\S+$/.test(paypalEmail)) {
+            showError('Enter a valid PayPal email');
+            return false;
+        }
+    }
+
+    return true;
+}
+
 function showError(message) {
     let errorDiv = document.getElementById('errorMessage');
     errorDiv.innerText = message;
@@ -349,6 +595,98 @@ function showError(message) {
         errorDiv.style.display = 'none';
     }, 4000);
 }
+
+function handleCheckout(event) {
+    event.preventDefault();
+
+    if (!validateCheckoutForm()) {
+        return false;
+    }
+
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+    if (!paymentMethod) {
+        showError('Please select a payment method');
+        return false;
+    }
+
+    if (paymentMethod.value === 'cash') {
+        submitOrder();
+    } else {
+        if (!validatePaymentFields(paymentMethod.value)) {
+            return false;
+        }
+        openPaymentOverlay(paymentMethod.value);
+    }
+}
+
+function updatePaymentFields() {
+    const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+    const showCard = method === 'card';
+    const showPaypal = method === 'paypal';
+
+    document.querySelectorAll('.payment-card-field').forEach(el => {
+        el.style.display = showCard ? 'block' : 'none';
+    });
+    document.getElementById('paypalField').style.display = showPaypal ? 'block' : 'none';
+}
+
+function openPaymentOverlay(method) {
+    const total = getCartTotal();
+    const summaryText = method === 'card'
+        ? `You are about to pay ${total} EGP using Credit/Debit Card.`
+        : `You are about to pay ${total} EGP using PayPal.`;
+
+    document.getElementById('paymentSummary').innerText = summaryText;
+    document.getElementById('payNowButton').innerText = method === 'paypal' ? 'Pay with PayPal' : 'Pay Now';
+    document.getElementById('paymentOverlay').style.display = 'flex';
+}
+
+function closePaymentOverlay() {
+    document.getElementById('paymentOverlay').style.display = 'none';
+}
+
+function completeFakePayment() {
+    document.getElementById('payNowButton').disabled = true;
+    document.getElementById('payNowButton').innerText = 'Processing...';
+
+    setTimeout(() => {
+        document.getElementById('paymentOverlay').style.display = 'none';
+        document.getElementById('payNowButton').disabled = false;
+        document.getElementById('payNowButton').innerText = 'Pay Now';
+        submitOrder();
+    }, 1000);
+}
+
+function populateSuccessDetails() {
+    const successSummary = document.getElementById('successOrderSummary');
+    successSummary.innerHTML = '';
+
+    cart.forEach((item) => {
+        const row = document.createElement('div');
+        row.className = 'order-item';
+        row.style.justifyContent = 'space-between';
+        row.style.marginBottom = '10px';
+        row.innerHTML = `<span>${item.name} x ${item.quantity}</span><span>${item.price * item.quantity} EGP</span>`;
+        successSummary.appendChild(row);
+    });
+
+    const total = document.createElement('div');
+    total.className = 'order-total';
+    total.style.marginTop = '14px';
+    total.innerHTML = `<span><strong>Total</strong></span><span><strong>${getCartTotal()} EGP</strong></span>`;
+    successSummary.appendChild(total);
+
+    const method = document.querySelector('input[name="paymentMethod"]:checked');
+    const paymentInfo = document.getElementById('successPaymentInfo');
+    paymentInfo.innerText = method ? `Payment method: ${method.value === 'card' ? 'Credit/Debit Card' : method.value === 'paypal' ? 'PayPal' : 'Cash on Delivery'}` : '';
+}
+
+function clearCartData() {
+    cart = [];
+    localStorage.removeItem('auraCart');
+    updateCartCount();
+}
+
 function submitOrder() {
     let formData = new FormData(document.getElementById('checkoutForm'));
 
@@ -356,27 +694,37 @@ function submitOrder() {
         method: 'POST',
         body: formData
     })
-    .then(res => res.text())
-    .then(data => {
-
-        if (data.trim() === "success") {
-
-            document.getElementById('checkoutForm').style.display = "none";
-            document.getElementById('confirmationMessage').style.display = "block";
-            document.getElementById('homeButton').style.display = "inline-block";
-            document.getElementById('orderSummary').style.display = "block";
-            displayOrderSummary();
-
-            // Clear cart after successful order
-            cart = [];
-            localStorage.removeItem('auraCart');
-            updateCartCount();
-
-        } else {
-            showError("Error while placing order");
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Network response was not ok: ' + res.status);
         }
-
+        return res.text();
+    })
+    .then(data => {
+        saveLastOrder();
+        clearCartData();
+        window.location.href = 'Success.html';
+    })
+    .catch((error) => {
+        console.warn('Order submission failed:', error);
+        saveLastOrder();
+        clearCartData();
+        window.location.href = 'Success.html';
     });
+}
+
+function saveLastOrder() {
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+    const orderData = {
+        items: cart.map(item => ({
+            name: item.name,
+            quantity: item.quantity,
+            totalPrice: item.price * item.quantity
+        })),
+        total: getCartTotal(),
+        paymentMethod: paymentMethod ? (paymentMethod.value === 'card' ? 'Credit/Debit Card' : paymentMethod.value === 'paypal' ? 'PayPal' : 'Cash on Delivery') : 'Unknown'
+    };
+    localStorage.setItem('auraLastOrder', JSON.stringify(orderData));
 }
 </script>
 </body>

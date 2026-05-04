@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success - AURA</title>
+    <link rel="stylesheet" href="Style.css">
+    <style>
+        body {
+            padding-top: 100px;
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFE4E4 100%);
+        }
+        .success-page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 22px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+        .success-page h1 {
+            color: #703B3B;
+            margin-bottom: 12px;
+        }
+        .success-page p {
+            color: #4f2e2e;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+        .success-page .success-details {
+            text-align: left;
+            background: #f7e6e0;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+        .success-page .success-details h3 {
+            margin-top: 0;
+            color: #703B3B;
+        }
+        .success-page .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            color: #3f2727;
+        }
+        .success-page .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 18px;
+            font-weight: 700;
+            color: #703B3B;
+        }
+        .success-page .btn-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .success-page button {
+            min-width: 160px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 22px;
+            cursor: pointer;
+        }
+        .success-page .btn-primary {
+            background: #703B3B;
+            color: white;
+        }
+        .success-page .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .no-order-message {
+            color: #703B3B;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-left">
+            <a href="Home.html">Home</a>
+            <div class="dropdown">
+                <button class="dropbtn">Products <i class="fas fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="Products.html">All Products</a>
+                    <a href="Products.html?category=face">Face</a>
+                    <a href="Products.html?category=eyes">Eyes</a>
+                    <a href="Products.html?category=lips">Lips</a>
+                    <a href="Products.html?category=blusher">Blusher</a>
+                </div>
+            </div>
+            <a href="About us.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+        </div>
+        <span class="logo">AURA</span>
+        <div class="nav-right">
+            <a href="Cart.html">🛒 Cart (<span id="cartCount">0</span>)</a>
+            <div class="search-icon" onclick="openSearchPopup()">
+                <i class="fas fa-search"></i>
+            </div>
+            <a href="#" class="profile-icon" onclick="openProfile()">
+                <i class="fas fa-user-circle"></i>
+            </a>
+        </div>
+    </div>
+
+    <div id="searchOverlay" class="search-overlay" onclick="closeSearchPopupOnOverlay(event)">
+        <div class="search-popup">
+            <form onsubmit="performSearch(); return false;">
+                <input type="text" id="searchPopupInput" placeholder="WHAT ARE YOU LOOKING FOR?" autocomplete="off">
+                <button type="submit"> Search</button>
+            </form>
+        </div>
+        <button class="close-search" onclick="closeSearchPopup()">✕</button>
+    </div>
+
+    <main class="success-page">
+        <div class="success-content">
+            <div class="success-icon">✅</div>
+            <h1>Order Confirmed!</h1>
+            <p>Thank you for your purchase. Your order has been received and is being processed.</p>
+            <div class="success-details" id="successDetails">
+                <h3>Order Summary</h3>
+                <div id="successOrderItems"></div>
+                <div class="total-row"><span>Total</span><span id="successOrderTotal"></span></div>
+                <p id="successPaymentMethod" style="margin-top: 18px;"></p>
+            </div>
+            <div class="btn-group">
+                <button class="btn-primary" onclick="window.location.href='Home.html'">Continue Shopping</button>
+                <button class="btn-secondary" onclick="window.location.href='Products.html'">Browse Products</button>
+            </div>
+            <p class="no-order-message" id="noOrderMessage" style="display:none;">No recent order found. Please place an order from the checkout page.</p>
+        </div>
+    </main>
+
+    <script src="Script.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            clearCartData();
+            loadCartFromLocalStorage();
+            updateCartCount();
+
+            const orderData = localStorage.getItem('auraLastOrder');
+            if (!orderData) {
+                document.getElementById('successDetails').style.display = 'none';
+                document.getElementById('noOrderMessage').style.display = 'block';
+                return;
+            }
+
+            const order = JSON.parse(orderData);
+            const itemsContainer = document.getElementById('successOrderItems');
+            itemsContainer.innerHTML = '';
+
+            order.items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'order-item';
+                itemDiv.innerHTML = `<span>${item.name} x ${item.quantity}</span><span>${item.totalPrice} EGP</span>`;
+                itemsContainer.appendChild(itemDiv);
+            });
+
+            document.getElementById('successOrderTotal').innerText = order.total + ' EGP';
+            document.getElementById('successPaymentMethod').innerText = 'Payment method: ' + order.paymentMethod;
+        });
+    </script>
+</body>
+</html>
